@@ -67,7 +67,7 @@
         </div>
         <div>
           <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-            Home Library <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/25 px-2 py-0.5 rounded-full font-normal">v4.4</span>
+            Home Library <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/25 px-2 py-0.5 rounded-full font-normal">v4.5</span>
           </h1>
         </div>
       </div>
@@ -377,17 +377,29 @@
     <div class="bg-slate-900/40 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
       <div class="px-6 py-4 border-b border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h3 class="text-base font-bold text-white flex items-center gap-2">
-          <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25a2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+          <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25a2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
           Logged Books Archive
         </h3>
         <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
           <span id="filteredCountBadge" class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1.5 rounded-full font-semibold border border-slate-700">0 volumes matched</span>
-          <button onclick="exportBooksToCSV()" class="text-xs text-slate-950 bg-amber-500 hover:bg-amber-400 font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-lg">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 015.25 21h13.5A2.25 2.25 0 0121 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            <span>Export CSV</span>
-          </button>
+          
+          <div class="flex items-center gap-2">
+            <!-- Hidden Import Trigger -->
+            <input type="file" id="csvImportInput" accept=".csv" onchange="handleCSVImport(event)" class="hidden" />
+            <button onclick="document.getElementById('csvImportInput').click()" class="text-xs text-slate-300 border border-slate-700 hover:border-slate-500 hover:text-white font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-lg">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 015.25 21h13.5A2.25 2.25 0 0121 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              <span>Import CSV</span>
+            </button>
+
+            <button onclick="exportBooksToCSV()" class="text-xs text-slate-950 bg-amber-500 hover:bg-amber-400 font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-lg">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 015.25 21h13.5A2.25 2.25 0 0121 18.75V16.5m-13.5-2.25L12 10.5m0 0l4.5 4.5M12 10.5v10.5" />
+              </svg>
+              <span>Export CSV</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -476,13 +488,191 @@
 
         <!-- Action Row -->
         <div class="pt-4 border-t border-slate-800/80 flex gap-2">
-          <button id="modalBtnDelete" class="w-full py-3 px-4 bg-rose-950/40 hover:bg-rose-900 border border-rose-500/35 text-rose-200 font-bold rounded-xl transition-all text-xs flex items-center justify-center gap-2">
+          <button id="modalBtnEdit" class="flex-1 py-3 px-4 bg-slate-850 hover:bg-slate-800 border border-slate-700/80 text-amber-400 font-bold rounded-xl transition-all text-xs flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+            Edit Volume
+          </button>
+          <button id="modalBtnDelete" class="flex-1 py-3 px-4 bg-rose-950/40 hover:bg-rose-900 border border-rose-500/35 text-rose-200 font-bold rounded-xl transition-all text-xs flex items-center justify-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-            Remove Volume From Library
+            Remove Volume
           </button>
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- EDIT BOOK MODAL -->
+  <div id="editBookModal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col p-6 md:p-8 space-y-6">
+      <div class="flex justify-between items-center">
+        <h3 class="text-xl font-bold text-white font-serif flex items-center gap-2">
+          <span class="text-amber-500">✍</span> Edit Volume Record
+        </h3>
+        <button onclick="closeEditModal()" class="p-1 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-all text-xs font-semibold px-2">
+          ✕ Close
+        </button>
+      </div>
+
+      <form id="editBookForm" onsubmit="handleEditFormSubmit(event)" class="space-y-6">
+        <input type="hidden" id="editBookId" />
+
+        <!-- Row 1: Book Title and Author First/Last Name with Voice Support -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Book Title -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                Book Title <span class="text-rose-500">*</span>
+              </label>
+              <span id="edit-listening-title" class="hidden text-xs text-rose-400 animate-pulse flex items-center gap-1 font-semibold">
+                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span> Listening...
+              </span>
+            </div>
+            <div class="relative">
+              <input
+                type="text"
+                id="editFormTitle"
+                required
+                placeholder="e.g. Beyond Good and Evil"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 pl-4 pr-12 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-medium text-sm"
+              />
+              <button
+                type="button"
+                onclick="startVoiceCapture('editFormTitle', 'edit-listening-title')"
+                class="absolute right-2 top-2 p-1 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
+                title="Dictate book title"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Author First Name -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                Author First Name <span class="text-rose-500">*</span>
+              </label>
+              <span id="edit-listening-authorFirst" class="hidden text-xs text-rose-400 animate-pulse flex items-center gap-1 font-semibold">
+                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span> Listening...
+              </span>
+            </div>
+            <div class="relative">
+              <input
+                type="text"
+                id="editFormAuthorFirst"
+                required
+                placeholder="e.g. Friedrich"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 pl-4 pr-12 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-medium text-sm"
+              />
+              <button
+                type="button"
+                onclick="startVoiceCapture('editFormAuthorFirst', 'edit-listening-authorFirst')"
+                class="absolute right-2 top-2 p-1 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
+                title="Dictate first name"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Author Last Name -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                Author Last Name <span class="text-rose-500">*</span>
+              </label>
+              <span id="edit-listening-authorLast" class="hidden text-xs text-rose-400 animate-pulse flex items-center gap-1 font-semibold">
+                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span> Listening...
+              </span>
+            </div>
+            <div class="relative">
+              <input
+                type="text"
+                id="editFormAuthorLast"
+                required
+                placeholder="e.g. Nietzsche"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 pl-4 pr-12 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-medium text-sm"
+              />
+              <button
+                type="button"
+                onclick="startVoiceCapture('editFormAuthorLast', 'edit-listening-authorLast')"
+                class="absolute right-2 top-2 p-1 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
+                title="Dictate last name"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Binding, Collectibility, Anthology, and Import status toggles -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Binding Type -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Binding Type</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="setEditFormBinding('paperback')" id="btnEditBindPaperback" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+                Paperback
+              </button>
+              <button type="button" onclick="setEditFormBinding('hardcover')" id="btnEditBindHardcover" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+                Hard Cover
+              </button>
+            </div>
+          </div>
+
+          <!-- Collectibility Status -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Collectibility Status</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="setEditFormCollectibility('not-rare')" id="btnEditCollectibilityStandard" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+                Standard Edition
+              </button>
+              <button type="button" onclick="setEditFormCollectibility('rare')" id="btnEditCollectibilityRare" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+                Rare Archive
+              </button>
+            </div>
+          </div>
+
+          <!-- Anthology -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Anthology? (Collection)</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="setEditFormAnthology('no')" id="btnEditAnthologyNo" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+                Single Work
+              </button>
+              <button type="button" onclick="setEditFormAnthology('yes')" id="btnEditAnthologyYes" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+                Anthology
+              </button>
+            </div>
+          </div>
+
+          <!-- Imported? (Collection) -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Imported? (Collection)</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="setEditFormImportStatus('manual')" id="btnEditImportManual" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+                Not Imported
+              </button>
+              <button type="button" onclick="setEditFormImportStatus('imported')" id="btnEditImportImported" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+                Imported
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Submission Row -->
+        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeEditModal()" class="py-2.5 px-6 bg-slate-950 border border-slate-800 hover:bg-slate-900 text-slate-300 font-bold rounded-xl transition-all text-xs">
+            Cancel
+          </button>
+          <button type="submit" class="py-2.5 px-8 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl transition-all text-xs shadow-xl flex items-center gap-2">
+            <span>Save Changes</span>
+          </button>
+        </div>
+
+      </form>
     </div>
   </div>
 
@@ -523,11 +713,17 @@
 
     let books = [];
 
-    // Form selection variables
+    // Form selection variables (Add Form)
     let formSelectedBinding = 'paperback';
     let formSelectedCollectibility = 'not-rare';
     let formSelectedAnthology = 'no';
     let formSelectedImportStatus = 'manual';
+
+    // Form selection variables (Edit Form)
+    let editSelectedBinding = 'paperback';
+    let editSelectedCollectibility = 'not-rare';
+    let editSelectedAnthology = 'no';
+    let editSelectedImportStatus = 'manual';
 
     window.addEventListener('DOMContentLoaded', () => {
       // Sync LocalStorage
@@ -655,6 +851,202 @@
       }
     }
 
+    // Edit Form Setters
+    function setEditFormBinding(val) {
+      editSelectedBinding = val;
+      const btnPaperback = document.getElementById('btnEditBindPaperback');
+      const btnHardcover = document.getElementById('btnEditBindHardcover');
+
+      if (val === 'paperback') {
+        btnPaperback.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnHardcover.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+      } else {
+        btnHardcover.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnPaperback.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+      }
+    }
+
+    function setEditFormCollectibility(val) {
+      editSelectedCollectibility = val;
+      const btnStandard = document.getElementById('btnEditCollectibilityStandard');
+      const btnRare = document.getElementById('btnEditCollectibilityRare');
+
+      if (val === 'not-rare') {
+        btnStandard.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnRare.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+      } else {
+        btnRare.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnStandard.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+      }
+    }
+
+    function setEditFormAnthology(val) {
+      editSelectedAnthology = val;
+      const btnNo = document.getElementById('btnEditAnthologyNo');
+      const btnYes = document.getElementById('btnEditAnthologyYes');
+
+      if (val === 'no') {
+        btnNo.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-sky-500/10 border-sky-500/80 text-sky-400 transition-all";
+        btnYes.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+      } else {
+        btnYes.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-sky-500/10 border-sky-500/80 text-sky-400 transition-all";
+        btnNo.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+      }
+    }
+
+    function setEditFormImportStatus(val) {
+      editSelectedImportStatus = val;
+      const btnManual = document.getElementById('btnEditImportManual');
+      const btnImported = document.getElementById('btnEditImportImported');
+
+      if (val === 'manual') {
+        btnManual.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnImported.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+      } else {
+        btnImported.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnManual.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+      }
+    }
+
+    // Native CSV File Parser
+    function parseCSV(text) {
+      const lines = [];
+      let row = [""];
+      lines.push(row);
+      let i = 0, char = '', insideQuote = false;
+
+      while (i < text.length) {
+        char = text[i];
+        if (char === '"') {
+          if (insideQuote && text[i+1] === '"') {
+            row[row.length - 1] += '"';
+            i++;
+          } else {
+            insideQuote = !insideQuote;
+          }
+        } else if (char === ',' && !insideQuote) {
+          row.push('');
+        } else if ((char === '\r' || char === '\n') && !insideQuote) {
+          if (char === '\r' && text[i+1] === '\n') {
+            i++;
+          }
+          row = [''];
+          lines.push(row);
+        } else {
+          row[row.length - 1] += char;
+        }
+        i++;
+      }
+      return lines.filter(r => r.length > 1 || (r.length === 1 && r[0] !== ''));
+    }
+
+    // CSV Import Logic
+    function handleCSVImport(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const text = e.target.result;
+        try {
+          const rows = parseCSV(text);
+          if (rows.length < 2) {
+            triggerToast("CSV file is empty or missing headers.", "error");
+            return;
+          }
+
+          const headers = rows[0].map(h => h.trim().toLowerCase());
+          
+          const titleIdx = headers.findIndex(h => h.includes("title") || h.includes("book"));
+          const firstIdx = headers.findIndex(h => h.includes("first") || h.includes("author first") || h.includes("firstname"));
+          const lastIdx = headers.findIndex(h => h.includes("last") || h.includes("author last") || h.includes("lastname"));
+          const bindIdx = headers.findIndex(h => h.includes("binding") || h.includes("type"));
+          const collIdx = headers.findIndex(h => h.includes("collectibility") || h.includes("rarity") || h.includes("collectable"));
+          const anthIdx = headers.findIndex(h => h.includes("anthology"));
+          const impIdx = headers.findIndex(h => h.includes("imported") || h.includes("import"));
+          const dateIdx = headers.findIndex(h => h.includes("date") || h.includes("logged") || h.includes("added"));
+
+          let importedCount = 0;
+          const newBooks = [];
+
+          for (let r = 1; r < rows.length; r++) {
+            const row = rows[r];
+            if (row.length === 0 || (row.length === 1 && row[0] === "")) continue;
+
+            const title = titleIdx !== -1 ? row[titleIdx] : row[1];
+            const authorFirst = firstIdx !== -1 ? row[firstIdx] : row[2];
+            const authorLast = lastIdx !== -1 ? row[lastIdx] : (row[3] || "");
+
+            // Ignore rows missing essential book details
+            if (!title || !authorFirst || !authorLast) continue;
+
+            // Bind Type Evaluation
+            let bindingVal = "paperback";
+            const rawBind = (bindIdx !== -1 ? row[bindIdx] : (row[4] || "")).toLowerCase();
+            if (rawBind.includes("hard") || rawBind.includes("cloth")) {
+              bindingVal = "hardcover";
+            }
+
+            // Collectibility Level Evaluation
+            let collVal = "not-rare";
+            const rawColl = (collIdx !== -1 ? row[collIdx] : (row[5] || "")).toLowerCase();
+            if (rawColl.includes("rare") || rawColl.includes("collect") || rawColl.includes("★")) {
+              collVal = "rare";
+            }
+
+            // Anthology Check
+            let anthVal = "no";
+            const rawAnth = (anthIdx !== -1 ? row[anthIdx] : (row[6] || "")).toLowerCase();
+            if (rawAnth.includes("yes") || rawAnth.includes("y") || rawAnth.includes("true")) {
+              anthVal = "yes";
+            }
+
+            // Imported Check
+            let impVal = "manual";
+            const rawImp = (impIdx !== -1 ? row[impIdx] : (row[7] || "")).toLowerCase();
+            if (rawImp.includes("yes") || rawImp.includes("imported") || rawImp.includes("y") || rawImp.includes("true")) {
+              impVal = "imported";
+            }
+
+            const dateVal = dateIdx !== -1 && row[dateIdx] ? row[dateIdx] : new Date().toISOString().split('T')[0];
+
+            const defaultCategory = "Classic";
+            const randomThemeColor = THEME_COLORS[Math.floor(Math.random() * THEME_COLORS.length)].name;
+
+            newBooks.push({
+              id: (Date.now() + importedCount).toString().slice(-6),
+              title: title.trim(),
+              authorFirst: authorFirst.trim(),
+              authorLast: authorLast.trim(),
+              type: bindingVal,
+              collectibility: collVal,
+              anthology: anthVal,
+              importStatus: impVal,
+              category: defaultCategory,
+              themeColor: randomThemeColor,
+              dateAdded: dateVal.trim()
+            });
+            importedCount++;
+          }
+
+          if (newBooks.length === 0) {
+            triggerToast("No records matched import requirements. Check Header Name columns.", "warning");
+            return;
+          }
+
+          books = [...newBooks, ...books];
+          localStorage.setItem('library_books_vanillajs', JSON.stringify(books));
+          triggerToast(`Successfully imported ${newBooks.length} book volumes!`, "success");
+          renderBooks();
+        } catch (err) {
+          console.error("CSV Import Error: ", err);
+          triggerToast("Invalid CSV layout format.", "error");
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = ""; // Clear file selector
+    }
+
     // Export current filtered dataset as CSV
     function exportBooksToCSV() {
       const searchQuery = document.getElementById('searchQuery').value.toLowerCase().trim();
@@ -663,7 +1055,6 @@
       const filterAnthology = document.getElementById('filterAnthology').value;
       const filterImportStatus = document.getElementById('filterImportStatus').value;
 
-      // Re-evaluate current active filter items
       const processed = books.filter(b => {
         const matchesSearch = b.title.toLowerCase().includes(searchQuery) || 
                               `${b.authorFirst} ${b.authorLast}`.toLowerCase().includes(searchQuery);
@@ -680,7 +1071,6 @@
         return;
       }
 
-      // Generate clean standard csv matrix string
       const headers = ["ID", "Book Title", "Author First Name", "Author Last Name", "Category", "Binding Type", "Collectibility Level", "Anthology", "Imported?", "Date Logged"];
       const csvRows = [headers.join(",")];
 
@@ -724,7 +1114,7 @@
       const authorLast = document.getElementById('formAuthorLast').value.trim();
 
       if (!title || !authorFirst || !authorLast) {
-        triggerToast("Please provide a book title, author's first name, and author's last name.", "warning");
+        triggerToast("Please fill in all required form fields.", "warning");
         return;
       }
 
@@ -759,6 +1149,66 @@
       setFormImportStatus('manual');
 
       // Refresh Books Table
+      renderBooks();
+    }
+
+    // Edit Modal Operators
+    function openEditModal(bookId) {
+      const book = books.find(b => b.id === bookId);
+      if (!book) return;
+
+      document.getElementById('editBookId').value = book.id;
+      document.getElementById('editFormTitle').value = book.title;
+      document.getElementById('editFormAuthorFirst').value = book.authorFirst;
+      document.getElementById('editFormAuthorLast').value = book.authorLast;
+
+      setEditFormBinding(book.type);
+      setEditFormCollectibility(book.collectibility);
+      setEditFormAnthology(book.anthology);
+      setEditFormImportStatus(book.importStatus || 'manual');
+
+      // Close details modal if open
+      closeBookModal();
+
+      const modal = document.getElementById('editBookModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeEditModal() {
+      const modal = document.getElementById('editBookModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Handle Edit Form Submission
+    function handleEditFormSubmit(e) {
+      e.preventDefault();
+      const bookId = document.getElementById('editBookId').value;
+      const book = books.find(b => b.id === bookId);
+      if (!book) return;
+
+      const title = document.getElementById('editFormTitle').value.trim();
+      const authorFirst = document.getElementById('editFormAuthorFirst').value.trim();
+      const authorLast = document.getElementById('editFormAuthorLast').value.trim();
+
+      if (!title || !authorFirst || !authorLast) {
+        triggerToast("Please provide all required book parameters.", "warning");
+        return;
+      }
+
+      book.title = title;
+      book.authorFirst = authorFirst;
+      book.authorLast = authorLast;
+      book.type = editSelectedBinding;
+      book.collectibility = editSelectedCollectibility;
+      book.anthology = editSelectedAnthology;
+      book.importStatus = editSelectedImportStatus;
+
+      localStorage.setItem('library_books_vanillajs', JSON.stringify(books));
+      triggerToast(`Changes to "${title}" successfully updated!`, "success");
+
+      closeEditModal();
       renderBooks();
     }
 
@@ -857,9 +1307,12 @@
           </td>
           <td class="py-4 px-6 text-slate-500 text-xs">${b.dateAdded}</td>
           <td class="py-4 px-6 text-right">
-            <div class="flex items-center justify-end gap-3">
+            <div class="flex items-center justify-end gap-2">
               <button onclick="openBookModalById('${b.id}')" class="text-xs text-amber-500 hover:text-amber-400 font-bold px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 rounded-lg transition-all">
                 Details
+              </button>
+              <button onclick="openEditModal('${b.id}')" class="text-xs text-sky-400 hover:text-sky-300 font-bold px-2.5 py-1 bg-sky-500/10 hover:bg-sky-500/20 rounded-lg transition-all flex items-center gap-1">
+                Edit
               </button>
               <button onclick="deleteBookItem('${b.id}', '${b.title}')" class="text-slate-500 hover:text-rose-400 p-1.5 hover:bg-rose-500/10 rounded-lg transition-all" title="Remove Record">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
@@ -934,6 +1387,7 @@
         rarityContainer.textContent = 'Standard Edition';
       }
 
+      document.getElementById('modalBtnEdit').onclick = () => openEditModal(book.id);
       document.getElementById('modalBtnDelete').onclick = () => deleteBookItem(book.id, book.title);
 
       modal.classList.remove('hidden');
