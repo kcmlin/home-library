@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Library | Premium Interactive Personal Library</title>
+  <title>Home Library | Premium Personal Book Cataloger</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -27,7 +27,7 @@
   </script>
 
   <style>
-    /* Premium visual styles */
+    /* Premium book spine textures */
     .bg-noise {
       background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 0), radial-gradient(rgba(0,0,0,0.3) 1px, transparent 0);
       background-size: 8px 8px;
@@ -53,11 +53,12 @@
   <!-- TOASTS CONTAINER -->
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full"></div>
 
+  <!-- NAVIGATION & BRAND HEADER -->
   <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       
       <!-- Brand Logo -->
-      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
+      <div class="flex items-center gap-3">
         <div class="w-10 h-10 bg-gradient-to-tr from-amber-600 to-amber-400 rounded-xl flex items-center justify-center shadow-lg shadow-amber-600/20 text-slate-950">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -65,199 +66,59 @@
         </div>
         <div>
           <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-            Home Library <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/25 px-2 py-0.5 rounded-full font-normal">Native v3.5</span>
+            Home Library <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/25 px-2 py-0.5 rounded-full font-normal">v4.0</span>
           </h1>
         </div>
       </div>
 
-      <!-- Tab Navigation Menu -->
-      <nav class="flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800">
-        <button id="tabBtn-dashboard" onclick="switchTab('dashboard')" class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all bg-amber-500 text-slate-950 shadow-md">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-          <span>Dashboard</span>
+      <!-- Quick Actions -->
+      <div class="flex items-center gap-3">
+        <button onclick="toggleResetDialog(true)" class="text-xs text-slate-400 hover:text-rose-400 border border-slate-800 hover:border-rose-950 px-3 py-1.5 rounded-xl transition-all font-medium">
+          Reset Archive Data
         </button>
-        <button id="tabBtn-add" onclick="switchTab('add')" class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-900">
-          <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
-          <span>Log Book</span>
-        </button>
-        <button id="tabBtn-sheets" onclick="switchTab('sheets')" class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-900">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>
-          <span>Sheets Sync</span>
-        </button>
-      </nav>
+      </div>
 
     </div>
   </header>
 
   <!-- MAIN WRAPPER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
     <!-- ============================================= -->
-    <!-- TAB 1: LIBRARY DASHBOARD (HOMEPAGE) -->
+    <!-- STATISTICS QUICK COUNTERS -->
     <!-- ============================================= -->
-    <div id="tab-dashboard" class="space-y-8">
-      
-      <!-- Statistics Quick Counters -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/80 hover:border-slate-700/80 transition-all flex flex-col justify-between">
-          <span class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Total Collection</span>
-          <span id="statTotalBooks" class="text-4xl font-extrabold text-white mt-2">0</span>
-        </div>
-        <div class="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/80 hover:border-slate-700/80 transition-all flex flex-col justify-between">
-          <span class="text-xs text-amber-400 uppercase tracking-widest font-semibold flex items-center gap-1.5">
-            Rare Artifacts
-            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-ping"></span>
-          </span>
-          <span id="statRareBooks" class="text-4xl font-extrabold text-amber-400 mt-2">0</span>
-        </div>
-        <div class="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/80 hover:border-slate-700/80 transition-all flex flex-col justify-between">
-          <span class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Hardcover Vol.</span>
-          <span id="statHardcover" class="text-4xl font-extrabold text-white mt-2">0</span>
-        </div>
-        <div class="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/80 hover:border-slate-700/80 transition-all flex flex-col justify-between">
-          <span class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Anthologies</span>
-          <span id="statAnthology" class="text-4xl font-extrabold text-white mt-2">0</span>
-        </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/80 hover:border-slate-700/80 transition-all flex flex-col justify-between">
+        <span class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Total Collection</span>
+        <span id="statTotalBooks" class="text-4xl font-extrabold text-white mt-2">0</span>
       </div>
-
-      <!-- Advanced Filters & Searching Dashboard Panel -->
-      <div class="bg-slate-900/30 p-6 rounded-2xl border border-slate-800/60 space-y-4">
-        <div class="flex flex-col md:flex-row items-stretch justify-between gap-4">
-          
-          <!-- Unified Query Search bar -->
-          <div class="flex-1 relative">
-            <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-              <svg class="w-5 h-5 text-amber-500/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-            <input
-              type="text"
-              id="searchQuery"
-              oninput="handleFilterChange()"
-              placeholder="Search library catalog by book title or author..."
-              class="w-full pl-10 pr-12 py-3 bg-slate-950/80 border border-slate-800 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-500 transition-all"
-            />
-            <button 
-              onclick="document.getElementById('searchQuery').value = ''; handleFilterChange();"
-              class="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-white text-xs font-semibold px-2"
-            >
-              Clear
-            </button>
-          </div>
-        </div>
-
-        <!-- Filter Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-          <div>
-            <label class="block text-xs text-slate-400 mb-1 font-medium">Category</label>
-            <select id="filterCategory" onchange="handleFilterChange()" class="w-full bg-slate-950/80 border border-slate-800 text-xs rounded-xl px-3 py-2 text-slate-300 focus:border-amber-500 outline-none">
-              <option value="All">All Categories</option>
-              <!-- Populated dynamically -->
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs text-slate-400 mb-1 font-medium">Binding Type</label>
-            <select id="filterType" onchange="handleFilterChange()" class="w-full bg-slate-950/80 border border-slate-800 text-xs rounded-xl px-3 py-2 text-slate-300 focus:border-amber-500 outline-none">
-              <option value="All">All Bindings</option>
-              <option value="hardcover">Hard Cover</option>
-              <option value="paperback">Paperback</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs text-slate-400 mb-1 font-medium">Collectibility</label>
-            <select id="filterRarity" onchange="handleFilterChange()" class="w-full bg-slate-950/80 border border-slate-800 text-xs rounded-xl px-3 py-2 text-slate-300 focus:border-amber-500 outline-none">
-              <option value="All">All Collectibles</option>
-              <option value="rare">Rare Volumes</option>
-              <option value="not-rare">Standard Edition</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs text-slate-400 mb-1 font-medium">Anthology Edition</label>
-            <select id="filterAnthology" onchange="handleFilterChange()" class="w-full bg-slate-950/80 border border-slate-800 text-xs rounded-xl px-3 py-2 text-slate-300 focus:border-amber-500 outline-none">
-              <option value="All">All Editions</option>
-              <option value="yes">Is Anthology</option>
-              <option value="no">Single Work</option>
-            </select>
-          </div>
-        </div>
+      <div class="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/80 hover:border-slate-700/80 transition-all flex flex-col justify-between">
+        <span class="text-xs text-amber-400 uppercase tracking-widest font-semibold flex items-center gap-1.5">
+          Rare Artifacts
+          <span class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-ping"></span>
+        </span>
+        <span id="statRareBooks" class="text-4xl font-extrabold text-amber-400 mt-2">0</span>
       </div>
-
-      <!-- Real-Time Interactive BI Metrics (Moved to Homepage) -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
-        
-        <!-- Category Distribution Progress Card -->
-        <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 space-y-4 shadow-lg shadow-slate-950/35">
-          <h3 class="text-lg font-bold text-white flex items-center gap-2 font-serif">
-            <span class="w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse"></span>
-            Category Metrics Distribution
-          </h3>
-          <div id="analyticsCategoryList" class="space-y-3 pt-2">
-            <!-- Dynamically populated rows of categories -->
-          </div>
-        </div>
-
-        <!-- Composition Optimization metrics card -->
-        <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 flex flex-col justify-between space-y-6 shadow-lg shadow-slate-950/35">
-          <div class="space-y-4">
-            <h3 class="text-lg font-bold text-white flex items-center gap-2 font-serif">
-              <span class="w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse"></span>
-              Library Composition Analysis
-            </h3>
-            
-            <div class="grid grid-cols-2 gap-4">
-              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Hardcover Ratio</span>
-                <p id="calcHardcoverRatio" class="text-2xl font-black text-white mt-1">0%</p>
-                <p id="calcHardcoverLabel" class="text-xs text-slate-400 mt-1">0 of 0 volumes</p>
-              </div>
-
-              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Anthology Ratio</span>
-                <p id="calcAnthologyRatio" class="text-2xl font-black text-white mt-1">0%</p>
-                <p id="calcAnthologyLabel" class="text-xs text-slate-400 mt-1">0 collection volumes</p>
-              </div>
-
-              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Collectibility Status</span>
-                <p id="calcRarityRatio" class="text-2xl font-black text-amber-400 mt-1">0%</p>
-                <p id="calcRarityLabel" class="text-xs text-slate-400 mt-1">0 rare items archived</p>
-              </div>
-
-              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Average Author Volume</span>
-                <p id="calcAuthorRatio" class="text-2xl font-black text-white mt-1">0</p>
-                <p class="text-xs text-slate-400 mt-1">Ratio per author profile</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Dynamic recommendation system based on state metrics -->
-          <div class="p-4 bg-amber-500/5 rounded-xl border border-amber-500/20 flex gap-3">
-            <svg class="w-6 h-6 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-            <div>
-              <h5 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Storage Optimizer Advice</h5>
-              <p id="calcAdviceBlock" class="text-xs text-slate-300 mt-0.5 leading-relaxed">
-                Loading automated library profile statistics recommendations...
-              </p>
-            </div>
-          </div>
-        </div>
-
+      <div class="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/80 hover:border-slate-700/80 transition-all flex flex-col justify-between">
+        <span class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Hardcover Vol.</span>
+        <span id="statHardcover" class="text-4xl font-extrabold text-white mt-2">0</span>
       </div>
-
+      <div class="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/80 hover:border-slate-700/80 transition-all flex flex-col justify-between">
+        <span class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Anthologies</span>
+        <span id="statAnthology" class="text-4xl font-extrabold text-white mt-2">0</span>
+      </div>
     </div>
 
     <!-- ============================================= -->
-    <!-- TAB 2: LOG NEW VOLUME -->
+    <!-- CATALOG NEW VOLUME CARD (HOMEPAGE TOP) -->
     <!-- ============================================= -->
-    <div id="tab-add" class="hidden max-w-3xl mx-auto bg-slate-900/30 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-8">
+    <div class="max-w-4xl mx-auto bg-slate-900/30 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6">
       <div>
         <h2 class="text-2xl font-extrabold text-white flex items-center gap-2.5 font-serif">
           <span class="text-amber-500">⚜</span> Catalog New Book Volume
         </h2>
         <p class="text-slate-400 text-sm mt-1">
-          Input book metadata manually or use the native speech engine for hands-free logging.
+          Input book metadata manually or use the native voice capture engine next to the text fields.
         </p>
       </div>
 
@@ -270,7 +131,7 @@
               Book Title <span class="text-rose-500">*</span>
             </label>
             <span id="listening-title" class="hidden text-xs text-rose-400 animate-pulse flex items-center gap-1 font-semibold">
-              <span class="w-1.5 h-1.5 bg-rose-500 rounded-full"></span> Listening...
+              <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span> Listening...
             </span>
           </div>
           <div class="relative">
@@ -284,8 +145,8 @@
             <button
               type="button"
               onclick="startVoiceCapture('formTitle', 'listening-title')"
-              class="absolute right-2.5 top-2 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
-              title="Dictate title name"
+              class="absolute right-2.5 top-2.5 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
+              title="Dictate book title"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
             </button>
@@ -302,7 +163,7 @@
                 Author First Name <span class="text-rose-500">*</span>
               </label>
               <span id="listening-authorFirst" class="hidden text-xs text-rose-400 animate-pulse flex items-center gap-1 font-semibold">
-                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full"></span> Listening...
+                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span> Listening...
               </span>
             </div>
             <div class="relative">
@@ -316,7 +177,7 @@
               <button
                 type="button"
                 onclick="startVoiceCapture('formAuthorFirst', 'listening-authorFirst')"
-                class="absolute right-2.5 top-2 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
+                class="absolute right-2.5 top-2.5 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
                 title="Dictate first name"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
@@ -331,7 +192,7 @@
                 Author Last Name
               </label>
               <span id="listening-authorLast" class="hidden text-xs text-rose-400 animate-pulse flex items-center gap-1 font-semibold">
-                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full"></span> Listening...
+                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span> Listening...
               </span>
             </div>
             <div class="relative">
@@ -344,7 +205,7 @@
               <button
                 type="button"
                 onclick="startVoiceCapture('formAuthorLast', 'listening-authorLast')"
-                class="absolute right-2.5 top-2 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
+                class="absolute right-2.5 top-2.5 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
                 title="Dictate last name"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
@@ -410,140 +271,136 @@
         </div>
 
         <!-- Form Submission Row -->
-        <div class="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="pt-6 border-t border-slate-800/80 flex items-center justify-between">
           <span class="text-xs text-slate-500">
-            * Marked fields are required for database verification.
+            * Marked fields are required for catalog registry.
           </span>
-          <div class="flex gap-3 w-full sm:w-auto">
-            <button type="button" onclick="switchTab('dashboard')" class="flex-1 sm:flex-initial py-3 px-6 bg-slate-950 border border-slate-800 hover:bg-slate-900 text-slate-300 font-bold rounded-xl transition-all text-sm">
-              Cancel
-            </button>
-            <button type="submit" class="flex-1 sm:flex-initial py-3 px-8 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl transition-all text-sm shadow-xl">
-              Save Volume Record
-            </button>
-          </div>
+          <button type="submit" class="py-3 px-8 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl transition-all text-sm shadow-xl flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+            Save to Library Shelf
+          </button>
         </div>
 
       </form>
     </div>
 
     <!-- ============================================= -->
-    <!-- TAB 3: GOOGLE SHEETS STORAGE -->
+    <!-- SEARCH AND FILTER INTERFACE -->
     <!-- ============================================= -->
-    <div id="tab-sheets" class="hidden max-w-4xl mx-auto space-y-8">
-      
-      <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6">
-        <div>
-          <h2 class="text-2xl font-extrabold text-white flex items-center gap-2.5 font-serif">
-            <span class="text-amber-500">☁</span> Google Sheets Streaming Setup
-          </h2>
-          <p class="text-slate-400 text-sm mt-1">
-            Connect your local catalog records to a Google Spreadsheet for multi-device synchronization.
-          </p>
-        </div>
-
-        <!-- Live Sync Web App Input -->
-        <div class="bg-slate-950/80 p-5 rounded-xl border border-slate-800/80 space-y-4">
-          <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-              <span id="syncIndicator" class="w-3.5 h-3.5 rounded-full bg-slate-600"></span>
-              <div>
-                <h4 class="font-bold text-white">Google Sheet Stream Status</h4>
-                <p id="syncStatusLabel" class="text-xs text-slate-400">Offline & Local Mode Only</p>
-              </div>
-            </div>
-            
-            <button
-              id="btnToggleSync"
-              onclick="toggleLiveSyncState()"
-              class="py-2 px-4 rounded-xl font-bold text-xs bg-slate-850 text-slate-400 hover:text-white transition-all"
-            >
-              Enable Live Sync
-            </button>
+    <div class="bg-slate-900/30 p-6 rounded-2xl border border-slate-800/60 space-y-4">
+      <div class="flex flex-col md:flex-row items-stretch justify-between gap-4">
+        
+        <!-- Unified Query Search bar -->
+        <div class="flex-1 relative">
+          <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+            <svg class="w-5 h-5 text-amber-500/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
           </div>
-
-          <div class="space-y-2 pt-2">
-            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
-              Google Apps Script Web App Deployment URL
-            </label>
-            <input
-              type="url"
-              id="sheetWebhookUrl"
-              placeholder="https://script.google.com/macros/s/.../exec"
-              oninput="handleWebhookInput(this.value)"
-              class="w-full bg-slate-900/60 border border-slate-800 rounded-xl py-3 px-4 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-mono text-xs"
-            />
-            <p class="text-[11px] text-slate-500 leading-relaxed">
-              When enabled, submitting books streams live payload parameters into Google's App Engine and writes to your spreadsheet cells without any visual reload.
-            </p>
-          </div>
+          <input
+            type="text"
+            id="searchQuery"
+            oninput="handleFilterChange()"
+            placeholder="Search catalog by book name or author..."
+            class="w-full pl-10 pr-12 py-3 bg-slate-950/80 border border-slate-800 rounded-xl focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-500 transition-all"
+          />
+          <button 
+            onclick="document.getElementById('searchQuery').value = ''; handleFilterChange();"
+            class="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-white text-xs font-semibold px-2"
+          >
+            Clear
+          </button>
         </div>
 
-        <!-- 3-Step Setup Manual -->
-        <div class="space-y-4">
-          <h3 class="font-bold text-white text-lg">Quick Setup Manual</h3>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800 space-y-2">
-              <div class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold flex items-center justify-center font-bold">1</div>
-              <h5 class="font-bold text-white">Open Spreadsheet App</h5>
-              <p class="text-slate-400 leading-relaxed">Create a spreadsheet, navigate to <strong class="text-amber-400">Extensions</strong> &rarr; <strong class="text-amber-400">Apps Script</strong>.</p>
-            </div>
-            <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800 space-y-2">
-              <div class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold flex items-center justify-center font-bold">2</div>
-              <h5 class="font-bold text-white">Paste Apps Script Template</h5>
-              <p class="text-slate-400 leading-relaxed">Clear default code, paste script template below, select <strong class="text-amber-400">Deploy &rarr; New Deployment &rarr; Web App</strong> with Access for <strong class="text-amber-400">"Anyone"</strong>.</p>
-            </div>
-            <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800 space-y-2">
-              <div class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold flex items-center justify-center font-bold">3</div>
-              <h5 class="font-bold text-white">Link Endpoint Web URL</h5>
-              <p class="text-slate-400 leading-relaxed">Copy the deployed URL, paste it above, and activate the "Enable Live Sync" switch!</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Copyable Apps Script Block -->
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Apps Script Code Template</span>
-            <button onclick="copyAppsScriptCode()" class="text-xs text-amber-500 hover:text-amber-400 font-bold">
-              Copy Code Template
-            </button>
-          </div>
-          <pre id="codeTemplateDisplay" class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs text-slate-400 overflow-x-auto max-h-60 leading-relaxed whitespace-pre-wrap select-all"></pre>
-        </div>
-
-      </div>
-
-      <!-- Live Simulative Cloud Sync log -->
-      <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-4">
-        <div>
-          <h3 class="text-lg font-bold text-white">Database Catalog Logs</h3>
-          <p class="text-xs text-slate-400">Confirm and inspect columns mapping into your integrated sheets.</p>
-        </div>
-
-        <div class="overflow-x-auto rounded-xl border border-slate-800">
-          <table class="w-full text-left text-xs text-slate-300">
-            <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider font-semibold">
-              <tr>
-                <th class="py-3.5 px-4">Row ID</th>
-                <th class="py-3.5 px-4">Book Title</th>
-                <th class="py-3.5 px-4">Author Name</th>
-                <th class="py-3.5 px-4">Binding Type</th>
-                <th class="py-3.5 px-4">Rarity Level</th>
-                <th class="py-3.5 px-4">Anthology?</th>
-                <th class="py-3.5 px-4">Category</th>
-                <th class="py-3.5 px-4">Logged Time</th>
-                <th class="py-3.5 px-4 text-center">Action</th>
-              </tr>
-            </thead>
-            <tbody id="simulatedSyncLogTable" class="divide-y divide-slate-800 bg-slate-900/10">
-              <!-- Sync entries generated here -->
-            </tbody>
-          </table>
+        <!-- Sort Selection -->
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-slate-400 font-medium whitespace-nowrap">Sort By</span>
+          <select
+            id="sortBy"
+            onchange="handleFilterChange()"
+            class="bg-slate-950/80 border border-slate-800 text-sm rounded-xl px-4 py-3 text-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none cursor-pointer"
+          >
+            <option value="newest">Recently Logged</option>
+            <option value="oldest">Oldest Logged</option>
+            <option value="title-asc">Title (A-Z)</option>
+            <option value="title-desc">Title (Z-A)</option>
+          </select>
         </div>
       </div>
 
+      <!-- Filter Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+        <div>
+          <label class="block text-xs text-slate-400 mb-1 font-medium">Category</label>
+          <select id="filterCategory" onchange="handleFilterChange()" class="w-full bg-slate-950/80 border border-slate-800 text-xs rounded-xl px-3 py-2 text-slate-300 focus:border-amber-500 outline-none">
+            <option value="All">All Categories</option>
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs text-slate-400 mb-1 font-medium">Binding Type</label>
+          <select id="filterType" onchange="handleFilterChange()" class="w-full bg-slate-950/80 border border-slate-800 text-xs rounded-xl px-3 py-2 text-slate-300 focus:border-amber-500 outline-none">
+            <option value="All">All Bindings</option>
+            <option value="hardcover">Hard Cover</option>
+            <option value="paperback">Paperback</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs text-slate-400 mb-1 font-medium">Collectibility</label>
+          <select id="filterRarity" onchange="handleFilterChange()" class="w-full bg-slate-950/80 border border-slate-800 text-xs rounded-xl px-3 py-2 text-slate-300 focus:border-amber-500 outline-none">
+            <option value="All">All Collectibles</option>
+            <option value="rare">Rare Volumes</option>
+            <option value="not-rare">Standard Edition</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs text-slate-400 mb-1 font-medium">Anthology Edition</label>
+          <select id="filterAnthology" onchange="handleFilterChange()" class="w-full bg-slate-950/80 border border-slate-800 text-xs rounded-xl px-3 py-2 text-slate-300 focus:border-amber-500 outline-none">
+            <option value="All">All Editions</option>
+            <option value="yes">Is Anthology</option>
+            <option value="no">Single Work</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- LOGGED BOOKS TABLE (HOMEPAGE BOTTOM) -->
+    <!-- ============================================= -->
+    <div class="bg-slate-900/40 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+      <div class="px-6 py-4 border-b border-slate-800 flex justify-between items-center">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+          Logged Books Archive
+        </h3>
+        <span id="filteredCountBadge" class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full font-semibold border border-slate-700">0 volumes matched</span>
+      </div>
+
+      <div class="overflow-x-auto custom-scrollbar">
+        <table class="w-full text-left text-xs text-slate-300 border-collapse">
+          <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider font-semibold">
+            <tr>
+              <th class="py-3.5 px-6">Book Title</th>
+              <th class="py-3.5 px-6">Author</th>
+              <th class="py-3.5 px-6">Category</th>
+              <th class="py-3.5 px-6">Binding Type</th>
+              <th class="py-3.5 px-6">Rarity</th>
+              <th class="py-3.5 px-6">Anthology?</th>
+              <th class="py-3.5 px-6">Date Logged</th>
+              <th class="py-3.5 px-6 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="booksTableBody" class="divide-y divide-slate-800/60 bg-slate-900/10">
+            <!-- Table rows populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- No Books Found Table Placeholder -->
+      <div id="emptyTableState" class="hidden py-12 text-center space-y-3">
+        <p class="text-slate-400 text-sm">No logged volumes match your search parameters.</p>
+        <button onclick="clearSearchFilters()" class="text-xs font-bold text-amber-500 hover:text-amber-400 underline transition-all">Clear Search Filters</button>
+      </div>
     </div>
 
   </main>
@@ -610,12 +467,12 @@
     </div>
   </div>
 
-  <!-- CATALYST SYSTEM MODAL (E.G. DATA RESET DIALOG) -->
+  <!-- CATALYST SYSTEM MODAL (DATA RESET DIALOG) -->
   <div id="systemResetModal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-sm w-full p-6 space-y-4">
       <h3 class="text-lg font-bold text-white font-serif">Confirm Factory Reset?</h3>
       <p class="text-slate-400 text-xs leading-relaxed">
-        This operations purges local collection arrays and re-establishes pre-configured premium demo archives.
+        This operation purges your local storage shelf and restores pre-configured historical catalog samples.
       </p>
       <div class="flex gap-3 justify-end pt-2">
         <button onclick="toggleResetDialog(false)" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-lg text-xs font-semibold hover:bg-slate-700 transition-all">Cancel</button>
@@ -624,20 +481,8 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500 mt-8">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p>&copy; 2026 Home Library Systems Inc. Open-Source Desktop Cataloger.</p>
-      <div class="flex gap-4">
-        <button onclick="toggleResetDialog(true)" class="hover:text-amber-500 transition-colors">Reset Database Archive</button>
-        <span>&bull;</span>
-        <span class="text-amber-500 font-medium">Standard Web Speech Integrated</span>
-      </div>
-    </div>
-  </footer>
-
   <!-- ============================================= -->
-  <!-- VANILLA JAVASCRIPT ARCHITECTURE -->
+  <!-- VANILLA JAVASCRIPT APPLICATION LOGIC -->
   <!-- ============================================= -->
   <script>
     const CATEGORIES = [
@@ -663,89 +508,42 @@
     ];
 
     let books = [];
-    let sheetsConfig = { url: '', enabled: false };
 
-    // Logging Form State values managed natively
+    // Form selection variables
     let formSelectedBinding = 'paperback';
     let formSelectedRarity = 'not-rare';
     let formSelectedAnthology = 'no';
     let formSelectedTheme = 'indigo';
 
-    // Google Apps Script source code template for copy logic
-    const googleAppsScriptCode = `/* Google Apps Script code to paste in your spreadsheet: */
-function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  try {
-    var data = JSON.parse(e.postData.contents);
-    
-    if (sheet.getLastRow() == 0) {
-      sheet.appendRow(["ID", "Book Title", "Author First Name", "Author Last Name", "Binding Type", "Rarity", "Anthology?", "Category", "Log Date"]);
-    }
-    
-    sheet.appendRow([
-      data.id,
-      data.title,
-      data.authorFirst,
-      data.authorLast,
-      data.type,
-      data.rarity,
-      data.anthology,
-      data.category,
-      data.dateAdded
-    ]);
-    
-    return ContentService.createTextOutput(JSON.stringify({"result":"success"}))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch(err) {
-    return ContentService.createTextOutput(JSON.stringify({"result":"error", "error": err.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}`;
-
-    // App Initialization
     window.addEventListener('DOMContentLoaded', () => {
-      // Setup dynamic configs and local states
+      // Sync LocalStorage
       const savedBooks = localStorage.getItem('library_books_vanillajs');
       books = savedBooks ? JSON.parse(savedBooks) : fallbackBooks;
 
-      const savedSheets = localStorage.getItem('library_sheets_config_vanillajs');
-      if (savedSheets) {
-        sheetsConfig = JSON.parse(savedSheets);
-      }
-
-      // Fill Category selectors
+      // Fill Category inputs
       populateCategoryFilters();
       
-      // Setup UI States
+      // Select defaults
       setFormBinding('paperback');
       setFormRarity('not-rare');
       setFormAnthology('no');
       renderThemeSelectors();
 
-      // Setup sheet settings inputs
-      document.getElementById('sheetWebhookUrl').value = sheetsConfig.url;
-      updateSyncIndicators();
-
-      // Show Google Apps Script code block
-      document.getElementById('codeTemplateDisplay').textContent = googleAppsScriptCode;
-
-      // Primary UI Render
-      updateAnalyticsDashboard();
+      // Render Dashboard elements
+      renderBooks();
     });
 
-    // Helper functions
+    // Populate drop selectors
     function populateCategoryFilters() {
       const filterCategory = document.getElementById('filterCategory');
       const formCategory = document.getElementById('formCategory');
       
       CATEGORIES.forEach(cat => {
-        // filter element
         const optFilter = document.createElement('option');
         optFilter.value = cat;
         optFilter.textContent = cat;
         filterCategory.appendChild(optFilter);
 
-        // form element
         const optForm = document.createElement('option');
         optForm.value = cat;
         optForm.textContent = cat;
@@ -753,6 +551,7 @@ function doPost(e) {
       });
     }
 
+    // Render color theme selector choices
     function renderThemeSelectors() {
       const container = document.getElementById('themeSelectionContainer');
       container.innerHTML = '';
@@ -764,128 +563,12 @@ function doPost(e) {
         btn.onclick = () => setFormThemeColor(col.name);
         btn.className = `px-3 py-2 rounded-xl text-xs font-bold border capitalize transition-all flex items-center gap-2 ${
           formSelectedTheme === col.name 
-            ? 'bg-slate-900 border-amber-500 text-amber-400' 
+            ? 'bg-slate-900 border-amber-500 text-amber-400 shadow-md' 
             : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white'
         }`;
         btn.innerHTML = `<span class="w-3 h-3 rounded-full bg-gradient-to-tr ${col.bg}"></span> ${col.name}`;
         container.appendChild(btn);
       });
-    }
-
-    function switchTab(tabId) {
-      const tabs = ['dashboard', 'add', 'sheets'];
-      tabs.forEach(t => {
-        const pane = document.getElementById(`tab-${t}`);
-        const btn = document.getElementById(`tabBtn-${t}`);
-        
-        if (t === tabId) {
-          pane.classList.remove('hidden');
-          btn.className = "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all bg-amber-500 text-slate-950 shadow-md";
-        } else {
-          pane.classList.add('hidden');
-          btn.className = "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-900";
-        }
-      });
-
-      // Special Tab-Switch actions
-      if (tabId === 'dashboard') {
-        updateAnalyticsDashboard();
-      } else if (tabId === 'sheets') {
-        renderSyncLogsTable();
-      }
-    }
-
-    // Dynamic Native Toasts
-    function triggerToast(message, type = 'success') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      const id = Date.now();
-      toast.id = `toast-${id}`;
-      
-      let badgeStyles = 'bg-emerald-950/90 border-emerald-500/50 text-emerald-200';
-      let icon = `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>`;
-      
-      if (type === 'error') {
-        badgeStyles = 'bg-rose-950/90 border-rose-500/50 text-rose-200';
-        icon = `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`;
-      } else if (type === 'info') {
-        badgeStyles = 'bg-sky-950/90 border-sky-500/50 text-sky-200';
-        icon = `<svg class="w-5 h-5 text-amber-500 animate-pulse" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`;
-      } else if (type === 'warning') {
-        badgeStyles = 'bg-amber-950/90 border-amber-500/50 text-amber-200';
-        icon = `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`;
-      }
-
-      toast.className = `p-4 rounded-xl shadow-2xl flex items-center justify-between border transition-all duration-300 transform translate-y-0 ${badgeStyles}`;
-      toast.innerHTML = `
-        <div class="flex items-center gap-3">
-          ${icon}
-          <span class="text-sm font-medium">${message}</span>
-        </div>
-        <button onclick="dismissToast(${id})" class="text-xs font-semibold hover:text-white px-2">✕</button>
-      `;
-
-      container.appendChild(toast);
-      setTimeout(() => dismissToast(id), 4000);
-    }
-
-    function dismissToast(id) {
-      const element = document.getElementById(`toast-${id}`);
-      if (element) {
-        element.style.opacity = '0';
-        setTimeout(() => element.remove(), 300);
-      }
-    }
-
-    // Google Sheets Synchronizer state managers
-    function handleWebhookInput(val) {
-      sheetsConfig.url = val.trim();
-      localStorage.setItem('library_sheets_config_vanillajs', JSON.stringify(sheetsConfig));
-      updateSyncIndicators();
-    }
-
-    function toggleLiveSyncState() {
-      if (!sheetsConfig.url) {
-        triggerToast("Please add your Google Apps Script endpoint Web App URL first.", "warning");
-        return;
-      }
-      sheetsConfig.enabled = !sheetsConfig.enabled;
-      localStorage.setItem('library_sheets_config_vanillajs', JSON.stringify(sheetsConfig));
-      updateSyncIndicators();
-      triggerToast(sheetsConfig.enabled ? "Google Sync active!" : "Google Sync deactivated.", sheetsConfig.enabled ? "success" : "info");
-    }
-
-    function updateSyncIndicators() {
-      const indicator = document.getElementById('syncIndicator');
-      const statusLabel = document.getElementById('syncStatusLabel');
-      const toggleBtn = document.getElementById('btnToggleSync');
-
-      if (sheetsConfig.enabled && sheetsConfig.url) {
-        indicator.className = "w-3.5 h-3.5 rounded-full bg-emerald-500 animate-pulse";
-        statusLabel.textContent = "Broadcasting entries live to Cloud Sheet";
-        toggleBtn.textContent = "Deactivate Sync";
-        toggleBtn.className = "py-2 px-4 rounded-xl font-bold text-xs bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-all cursor-pointer";
-      } else {
-        indicator.className = "w-3.5 h-3.5 rounded-full bg-slate-600";
-        statusLabel.textContent = "Offline & Local Mode Only";
-        toggleBtn.textContent = "Enable Live Sync";
-        toggleBtn.className = "py-2 px-4 rounded-xl font-bold text-xs bg-slate-850 text-slate-300 hover:bg-slate-700 transition-all cursor-pointer";
-      }
-    }
-
-    // Copy Apps Script logic fallback targeting sandboxed iframes
-    function copyAppsScriptCode() {
-      try {
-        const el = document.createElement('textarea');
-        el.value = googleAppsScriptCode;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        triggerToast("Code template copied to clipboard!");
-      } catch (e) {
-        triggerToast("Browser security blocked automatic copy. Please highlight code block to copy.", "warning");
-      }
     }
 
     function startVoiceCapture(inputId, listeningSpanId) {
@@ -905,7 +588,7 @@ function doPost(e) {
 
       recognition.onstart = () => {
         listeningSpan.classList.remove('hidden');
-        triggerToast("Speak clearly. Listening for field values now...", "info");
+        triggerToast("Voice engine active. Speak clearly now...", "info");
       };
 
       recognition.onend = () => {
@@ -913,25 +596,23 @@ function doPost(e) {
       };
 
       recognition.onerror = (e) => {
-        console.error("Speech Error Log: ", e);
-        triggerToast("Could not capture spoken text. Try again.", "error");
+        console.error("Speech Recognition Error: ", e);
+        triggerToast("Could not capture spoken input. Try again.", "error");
         listeningSpan.classList.add('hidden');
       };
 
       recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         if (transcript) {
-          // Beautify spoken values: capitalize leading character words
-          const capitalizeTranscript = transcript.trim().replace(/(^\w|\s\w)/g, m => m.toUpperCase());
-          inputElement.value = capitalizeTranscript;
-          triggerToast(`Captured: "${capitalizeTranscript}"`);
+          const capitalized = transcript.trim().replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+          inputElement.value = capitalized;
+          triggerToast(`Captured: "${capitalized}"`);
         }
       };
 
       recognition.start();
     }
 
-    // Logging Form element handlers
     function setFormBinding(val) {
       formSelectedBinding = val;
       const btnPaperback = document.getElementById('btnBindPaperback');
@@ -979,7 +660,8 @@ function doPost(e) {
       renderThemeSelectors();
     }
 
-    async function handleFormSubmit(e) {
+    // Save volume
+    function handleFormSubmit(e) {
       e.preventDefault();
       
       const title = document.getElementById('formTitle').value.trim();
@@ -1005,41 +687,23 @@ function doPost(e) {
         dateAdded: new Date().toISOString().split('T')[0]
       };
 
-      // Unshift to list and synchronize localStorage
       books.unshift(bookPayload);
       localStorage.setItem('library_books_vanillajs', JSON.stringify(books));
       
-      triggerToast(`"${title}" logged into local archives!`);
+      triggerToast(`"${title}" logged into archive.`);
 
-      // Realtime post streaming to active Google Web App deployments
-      if (sheetsConfig.enabled && sheetsConfig.url) {
-        triggerToast("Streaming record parameter payload to cloud...", "info");
-        try {
-          await fetch(sheetsConfig.url, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(bookPayload)
-          });
-          triggerToast("Cloud spreadsheet streaming acknowledged!");
-        } catch (err) {
-          console.error("Sheets Sync Error: ", err);
-          triggerToast("Cloud integration timed out. Confirm script Web App URL parameters.", "error");
-        }
-      }
-
-      // Reset fields
+      // Reset Form fields
       document.getElementById('addBookForm').reset();
       setFormBinding('paperback');
       setFormRarity('not-rare');
       setFormAnthology('no');
       setFormThemeColor('indigo');
 
-      // Navigate
-      switchTab('dashboard');
+      // Refresh Books Table
+      renderBooks();
     }
 
-    // Remove book item
+    // Delete book volume
     function deleteBookItem(bookId, title) {
       books = books.filter(b => b.id !== bookId);
       localStorage.setItem('library_books_vanillajs', JSON.stringify(books));
@@ -1049,67 +713,33 @@ function doPost(e) {
       renderBooks();
     }
 
-    // Advanced search, filtering and sorting calculations
     function handleFilterChange() {
       renderBooks();
     }
 
-    // Simulated Google Sheets Log Renderer
-    function renderSyncLogsTable() {
-      const container = document.getElementById('simulatedSyncLogTable');
-      container.innerHTML = '';
-
-      if (books.length === 0) {
-        container.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-slate-500 font-medium">No archived books in database logs.</td></tr>';
-        return;
-      }
-
-      books.forEach(b => {
-        const row = document.createElement('tr');
-        row.className = "hover:bg-slate-900/40 border-b border-slate-800/40";
-        row.innerHTML = `
-          <td class="py-3 px-4 font-mono text-slate-500 text-[10px]">${b.id}</td>
-          <td class="py-3 px-4 font-bold text-white">${b.title}</td>
-          <td class="py-3 px-4">${b.authorFirst} ${b.authorLast}</td>
-          <td class="py-3 px-4 capitalize">${b.type}</td>
-          <td class="py-3 px-4">
-            <span class="${b.rarity === 'rare' ? 'text-amber-400 font-bold' : 'text-slate-400'}">
-              ${b.rarity === 'rare' ? '★ Rare' : 'Standard'}
-            </span>
-          </td>
-          <td class="py-3 px-4 capitalize">${b.anthology}</td>
-          <td class="py-3 px-4">
-            <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded text-[10px] font-medium">${b.category}</span>
-          </td>
-          <td class="py-3 px-4 text-slate-500">${b.dateAdded}</td>
-          <td class="py-3 px-4 text-center">
-            <button 
-              onclick="event.stopPropagation(); deleteBookItem('${b.id}', '${b.title}'); renderSyncLogsTable();"
-              class="text-slate-500 hover:text-rose-400 p-1.5 hover:bg-rose-500/10 rounded-lg transition-all"
-              title="Delete Volume Record"
-            >
-              <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-            </button>
-          </td>
-        `;
-        container.appendChild(row);
-      });
+    function clearSearchFilters() {
+      document.getElementById('searchQuery').value = '';
+      document.getElementById('filterCategory').value = 'All';
+      document.getElementById('filterType').value = 'All';
+      document.getElementById('filterRarity').value = 'All';
+      document.getElementById('filterAnthology').value = 'All';
+      renderBooks();
     }
 
+    // Core table rendering with search criteria evaluation
     function renderBooks() {
-      // Re-routed to update homepage analytics
-      updateAnalyticsDashboard();
-    }
+      const tbody = document.getElementById('booksTableBody');
+      const emptyState = document.getElementById('emptyTableState');
+      tbody.innerHTML = '';
 
-    // Analytics Calculation Engine
-    function updateAnalyticsDashboard() {
       const searchQuery = document.getElementById('searchQuery').value.toLowerCase().trim();
       const filterCategory = document.getElementById('filterCategory').value;
       const filterType = document.getElementById('filterType').value;
       const filterRarity = document.getElementById('filterRarity').value;
       const filterAnthology = document.getElementById('filterAnthology').value;
+      const sortBy = document.getElementById('sortBy').value;
 
-      // Filtering array logic based on live UI parameters
+      // Filter local storage list based on live inputs
       let processed = books.filter(b => {
         const matchesSearch = b.title.toLowerCase().includes(searchQuery) || 
                               `${b.authorFirst} ${b.authorLast}`.toLowerCase().includes(searchQuery);
@@ -1121,75 +751,98 @@ function doPost(e) {
         return matchesSearch && matchesCategory && matchesType && matchesRarity && matchesAnthology;
       });
 
-      // Update counters dynamically to match search scope
-      document.getElementById('statTotalBooks').textContent = processed.length;
-      document.getElementById('statRareBooks').textContent = processed.filter(b => b.rarity === 'rare').length;
-      document.getElementById('statHardcover').textContent = processed.filter(b => b.type === 'hardcover').length;
-      document.getElementById('statAnthology').textContent = processed.filter(b => b.anthology === 'yes').length;
-
-      const listContainer = document.getElementById('analyticsCategoryList');
-      listContainer.innerHTML = '';
-
-      const stats = {
-        total: processed.length,
-        rare: processed.filter(b => b.rarity === 'rare').length,
-        hardcover: processed.filter(b => b.type === 'hardcover').length,
-        anthology: processed.filter(b => b.anthology === 'yes').length,
-        authors: new Set(processed.map(b => `${b.authorFirst} ${b.authorLast}`.trim())).size,
-        byCategory: processed.reduce((acc, curr) => {
-          acc[curr.category] = (acc[curr.category] || 0) + 1;
-          return acc;
-        }, {})
-      };
-
-      // Populate Genre list dynamically
-      CATEGORIES.forEach(cat => {
-        const count = stats.byCategory[cat] || 0;
-        const percentage = stats.total > 0 ? (count / stats.total) * 100 : 0;
-
-        const row = document.createElement('div');
-        row.className = "space-y-1";
-        row.innerHTML = `
-          <div class="flex justify-between text-xs font-semibold">
-            <span class="text-slate-300">${cat}</span>
-            <span class="text-slate-400">${count} volumes (${Math.round(percentage)}%)</span>
-          </div>
-          <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
-            <div class="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full transition-all duration-500" style="width: ${percentage}%"></div>
-          </div>
-        `;
-        listContainer.appendChild(row);
+      // Sorting
+      processed.sort((a, b) => {
+        if (sortBy === 'newest') return b.id.localeCompare(a.id);
+        if (sortBy === 'oldest') return a.id.localeCompare(b.id);
+        if (sortBy === 'title-asc') return a.title.localeCompare(b.title);
+        if (sortBy === 'title-desc') return b.title.localeCompare(a.title);
+        return 0;
       });
 
-      // Write Metric card ratios
-      const hcPct = stats.total > 0 ? Math.round((stats.hardcover / stats.total) * 100) : 0;
-      document.getElementById('calcHardcoverRatio').textContent = `${hcPct}%`;
-      document.getElementById('calcHardcoverLabel').textContent = `${stats.hardcover} of ${stats.total} volumes`;
+      // Update indicators and badges
+      updateStatsCounters();
+      document.getElementById('filteredCountBadge').textContent = `${processed.length} volumes matched`;
 
-      const antPct = stats.total > 0 ? Math.round((stats.anthology / stats.total) * 100) : 0;
-      document.getElementById('calcAnthologyRatio').textContent = `${antPct}%`;
-      document.getElementById('calcAnthologyLabel').textContent = `${stats.anthology} anthologies total`;
-
-      const rarePct = stats.total > 0 ? Math.round((stats.rare / stats.total) * 100) : 0;
-      document.getElementById('calcRarityRatio').textContent = `${rarePct}%`;
-      document.getElementById('calcRarityLabel').textContent = `${stats.rare} rare collectibles`;
-
-      const avgAuthorRatio = stats.authors > 0 ? (stats.total / stats.authors).toFixed(1) : 0;
-      document.getElementById('calcAuthorRatio').textContent = avgAuthorRatio;
-
-      // Build AI Advice response dynamically
-      const adviceBlock = document.getElementById('calcAdviceBlock');
-      if (stats.rare > 3) {
-        adviceBlock.textContent = "High Rare Volume ratio detected. Keep valuable historical pieces shelved in dust-jacket sleeves away from direct sunlight to preserve binding pigment.";
-      } else if (stats.total > 10) {
-        adviceBlock.textContent = "Your catalog features a healthy blend of standard bindings. Consider logging more Anthologies to consolidate thematic short-story collections onto singular shelves.";
-      } else {
-        adviceBlock.textContent = "Continue compiling your physical book logs. Once you configure a Cloud Webhook URL under the Sheets tab, this dashboard will safely preserve and back up all parameters.";
+      if (processed.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
       }
+      emptyState.classList.add('hidden');
+
+      // Loop and render matching results inside the table
+      processed.forEach(b => {
+        const theme = THEME_COLORS.find(c => c.name === b.themeColor) || THEME_COLORS[0];
+        const row = document.createElement('tr');
+        row.className = "hover:bg-slate-900/40 border-b border-slate-800/60 transition-colors";
+        
+        row.innerHTML = `
+          <td class="py-4 px-6 font-bold text-white flex items-center gap-2.5">
+            <span class="w-3 h-3 rounded-full bg-gradient-to-tr ${theme.bg} shadow-sm"></span>
+            ${b.title}
+          </td>
+          <td class="py-4 px-6 text-slate-300 font-medium">${b.authorFirst} ${b.authorLast}</td>
+          <td class="py-4 px-6">
+            <span class="bg-slate-800 border border-slate-700/50 text-slate-300 px-2.5 py-1 rounded-full text-[10px] font-semibold">${b.category}</span>
+          </td>
+          <td class="py-4 px-6 text-slate-300 capitalize text-xs">${b.type}</td>
+          <td class="py-4 px-6">
+            ${b.rarity === 'rare' 
+              ? '<span class="text-amber-400 font-bold flex items-center gap-1 text-[11px]">★ Rare</span>' 
+              : '<span class="text-slate-500 text-xs">Standard</span>'
+            }
+          </td>
+          <td class="py-4 px-6 text-slate-400 capitalize text-xs">${b.anthology === 'yes' ? 'Yes' : 'No'}</td>
+          <td class="py-4 px-6 text-slate-500 text-xs">${b.dateAdded}</td>
+          <td class="py-4 px-6 text-right">
+            <div class="flex items-center justify-end gap-3">
+              <button onclick="openBookModalById('${b.id}')" class="text-xs text-amber-500 hover:text-amber-400 font-bold px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 rounded-lg transition-all">
+                Details
+              </button>
+              <button onclick="deleteBookItem('${b.id}', '${b.title}')" class="text-slate-500 hover:text-rose-400 p-1.5 hover:bg-rose-500/10 rounded-lg transition-all" title="Remove Record">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
     }
 
-    // Modal Manager
-    function openBookModal(book) {
+    function updateStatsCounters() {
+      document.getElementById('statTotalBooks').textContent = books.length;
+      document.getElementById('statRareBooks').textContent = books.filter(b => b.rarity === 'rare').length;
+      document.getElementById('statHardcover').textContent = books.filter(b => b.type === 'hardcover').length;
+      document.getElementById('statAnthology').textContent = books.filter(b => b.anthology === 'yes').length;
+    }
+
+    // Toast Manager
+    function triggerToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      const id = Date.now();
+      toast.id = `toast-${id}`;
+      
+      let badgeStyles = 'bg-emerald-950/95 border-emerald-500/50 text-emerald-200';
+      if (type === 'error') badgeStyles = 'bg-rose-950/95 border-rose-500/50 text-rose-200';
+      if (type === 'warning') badgeStyles = 'bg-amber-950/95 border-amber-500/50 text-amber-200';
+      if (type === 'info') badgeStyles = 'bg-slate-900/95 border-slate-700/50 text-slate-200';
+
+      toast.className = `p-4 rounded-xl shadow-2xl flex items-center justify-between border transition-all duration-300 transform translate-y-0 ${badgeStyles}`;
+      toast.innerHTML = `
+        <span class="text-xs font-semibold">${message}</span>
+        <button onclick="dismissToast(${id})" class="text-xs font-semibold ml-4 opacity-50 hover:opacity-100">✕</button>
+      `;
+
+      container.appendChild(toast);
+      setTimeout(() => dismissToast(id), 3500);
+    }
+
+    // Modal Controller
+    function openBookModalById(bookId) {
+      const book = books.find(b => b.id === bookId);
+      if (!book) return;
+
       const modal = document.getElementById('selectedBookModal');
       const theme = THEME_COLORS.find(c => c.name === book.themeColor) || THEME_COLORS[0];
 
@@ -1204,7 +857,7 @@ function doPost(e) {
 
       const rarityContainer = document.getElementById('modalRarityBadge');
       if (book.rarity === 'rare') {
-        rarityContainer.innerHTML = '<span class="text-amber-400 bg-amber-500/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md text-xs">★ Rare Edition</span>';
+        rarityContainer.innerHTML = '<span class="text-amber-400 bg-amber-500/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md text-xs font-bold">★ Rare Edition</span>';
       } else {
         rarityContainer.textContent = 'Standard Edition';
       }
@@ -1221,7 +874,6 @@ function doPost(e) {
       modal.classList.remove('flex');
     }
 
-    // Global Catalyst Dialog Controls
     function toggleResetDialog(visible) {
       const modal = document.getElementById('systemResetModal');
       if (visible) {
@@ -1236,10 +888,9 @@ function doPost(e) {
     function executeDatabaseReset() {
       books = [...fallbackBooks];
       localStorage.setItem('library_books_vanillajs', JSON.stringify(books));
-      
-      triggerToast("Catalog databases refreshed back to defaults.");
+      triggerToast("Catalog reset back to default values.");
       toggleResetDialog(false);
-      updateAnalyticsDashboard();
+      renderBooks();
     }
   </script>
 </body>
