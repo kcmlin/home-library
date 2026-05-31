@@ -27,7 +27,7 @@
   </script>
 
   <style>
-    /* Premium book spine textures */
+    /* Premium visual styles */
     .bg-noise {
       background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 0), radial-gradient(rgba(0,0,0,0.3) 1px, transparent 0);
       background-size: 8px 8px;
@@ -53,7 +53,6 @@
   <!-- TOASTS CONTAINER -->
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full"></div>
 
-  <!-- NAVIGATION & BRAND HEADER -->
   <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       
@@ -68,7 +67,6 @@
           <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
             Home Library <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/25 px-2 py-0.5 rounded-full font-normal">Native v3.5</span>
           </h1>
-          <p class="text-xs text-slate-400">Zero-Compiling Personal Library Cataloger</p>
         </div>
       </div>
 
@@ -86,10 +84,6 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>
           <span>Sheets Sync</span>
         </button>
-        <button id="tabBtn-analytics" onclick="switchTab('analytics')" class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-900">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" /></svg>
-          <span>Analytics</span>
-        </button>
       </nav>
 
     </div>
@@ -99,7 +93,7 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     <!-- ============================================= -->
-    <!-- TAB 1: LIBRARY DASHBOARD -->
+    <!-- TAB 1: LIBRARY DASHBOARD (HOMEPAGE) -->
     <!-- ============================================= -->
     <div id="tab-dashboard" class="space-y-8">
       
@@ -151,21 +145,6 @@
               Clear
             </button>
           </div>
-
-          <!-- Sort Selection -->
-          <div class="flex items-center gap-2">
-            <span class="text-xs text-slate-400 font-medium whitespace-nowrap">Sort By</span>
-            <select
-              id="sortBy"
-              onchange="handleFilterChange()"
-              class="bg-slate-950/80 border border-slate-800 text-sm rounded-xl px-4 py-3 text-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none cursor-pointer"
-            >
-              <option value="newest">Recently Logged</option>
-              <option value="oldest">Oldest Logged</option>
-              <option value="title-asc">Title (A-Z)</option>
-              <option value="title-desc">Title (Z-A)</option>
-            </select>
-          </div>
         </div>
 
         <!-- Filter Grid -->
@@ -204,22 +183,67 @@
         </div>
       </div>
 
-      <!-- Book Grid Container -->
-      <div id="booksGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+      <!-- Real-Time Interactive BI Metrics (Moved to Homepage) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+        
+        <!-- Category Distribution Progress Card -->
+        <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 space-y-4 shadow-lg shadow-slate-950/35">
+          <h3 class="text-lg font-bold text-white flex items-center gap-2 font-serif">
+            <span class="w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse"></span>
+            Category Metrics Distribution
+          </h3>
+          <div id="analyticsCategoryList" class="space-y-3 pt-2">
+            <!-- Dynamically populated rows of categories -->
+          </div>
+        </div>
 
-      <!-- No Books Found Placeholder -->
-      <div id="emptyStatePlaceholder" class="hidden bg-slate-900/20 rounded-2xl border border-dashed border-slate-800 py-16 text-center space-y-4">
-        <div class="w-16 h-16 bg-slate-900/80 rounded-full flex items-center justify-center mx-auto text-slate-600">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+        <!-- Composition Optimization metrics card -->
+        <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 flex flex-col justify-between space-y-6 shadow-lg shadow-slate-950/35">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-white flex items-center gap-2 font-serif">
+              <span class="w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse"></span>
+              Library Composition Analysis
+            </h3>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
+                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Hardcover Ratio</span>
+                <p id="calcHardcoverRatio" class="text-2xl font-black text-white mt-1">0%</p>
+                <p id="calcHardcoverLabel" class="text-xs text-slate-400 mt-1">0 of 0 volumes</p>
+              </div>
+
+              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
+                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Anthology Ratio</span>
+                <p id="calcAnthologyRatio" class="text-2xl font-black text-white mt-1">0%</p>
+                <p id="calcAnthologyLabel" class="text-xs text-slate-400 mt-1">0 collection volumes</p>
+              </div>
+
+              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
+                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Collectibility Status</span>
+                <p id="calcRarityRatio" class="text-2xl font-black text-amber-400 mt-1">0%</p>
+                <p id="calcRarityLabel" class="text-xs text-slate-400 mt-1">0 rare items archived</p>
+              </div>
+
+              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
+                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Average Author Volume</span>
+                <p id="calcAuthorRatio" class="text-2xl font-black text-white mt-1">0</p>
+                <p class="text-xs text-slate-400 mt-1">Ratio per author profile</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic recommendation system based on state metrics -->
+          <div class="p-4 bg-amber-500/5 rounded-xl border border-amber-500/20 flex gap-3">
+            <svg class="w-6 h-6 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <div>
+              <h5 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Storage Optimizer Advice</h5>
+              <p id="calcAdviceBlock" class="text-xs text-slate-300 mt-0.5 leading-relaxed">
+                Loading automated library profile statistics recommendations...
+              </p>
+            </div>
+          </div>
         </div>
-        <div>
-          <h3 class="text-lg font-bold text-white">No books match criteria</h3>
-          <p class="text-sm text-slate-400 max-w-md mx-auto mt-1">Try resetting or logging a new book volume into the archive database!</p>
-        </div>
-        <button onclick="switchTab('add')" class="px-5 py-2.5 bg-amber-500 text-slate-950 rounded-xl font-bold hover:bg-amber-400 transition-all text-sm inline-flex items-center gap-2">
-          <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-          Log New Book Now
-        </button>
+
       </div>
 
     </div>
@@ -263,7 +287,7 @@
               class="absolute right-2.5 top-2 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
               title="Dictate title name"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
             </button>
           </div>
         </div>
@@ -295,7 +319,7 @@
                 class="absolute right-2.5 top-2 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
                 title="Dictate first name"
               >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
               </button>
             </div>
           </div>
@@ -323,7 +347,7 @@
                 class="absolute right-2.5 top-2 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
                 title="Dictate last name"
               >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
               </button>
             </div>
           </div>
@@ -494,8 +518,8 @@
       <!-- Live Simulative Cloud Sync log -->
       <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-4">
         <div>
-          <h3 class="text-lg font-bold text-white">Simulated Cloud Spreadsheet Log</h3>
-          <p class="text-xs text-slate-400">Instant validation table confirming columns and fields mapping correctly.</p>
+          <h3 class="text-lg font-bold text-white">Database Catalog Logs</h3>
+          <p class="text-xs text-slate-400">Confirm and inspect columns mapping into your integrated sheets.</p>
         </div>
 
         <div class="overflow-x-auto rounded-xl border border-slate-800">
@@ -510,6 +534,7 @@
                 <th class="py-3.5 px-4">Anthology?</th>
                 <th class="py-3.5 px-4">Category</th>
                 <th class="py-3.5 px-4">Logged Time</th>
+                <th class="py-3.5 px-4 text-center">Action</th>
               </tr>
             </thead>
             <tbody id="simulatedSyncLogTable" class="divide-y divide-slate-800 bg-slate-900/10">
@@ -517,75 +542,6 @@
             </tbody>
           </table>
         </div>
-      </div>
-
-    </div>
-
-    <!-- ============================================= -->
-    <!-- TAB 4: REAL-TIME ANALYTICS -->
-    <!-- ============================================= -->
-    <div id="tab-analytics" class="hidden max-w-4xl mx-auto space-y-8">
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <!-- Category Distribution Progress Card -->
-        <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 space-y-4">
-          <h3 class="text-lg font-bold text-white flex items-center gap-2">
-            <span class="w-2.5 h-2.5 bg-amber-500 rounded-full"></span>
-            Category Metrics Distribution
-          </h3>
-          <div id="analyticsCategoryList" class="space-y-3 pt-2">
-            <!-- Dynamically populated rows of categories -->
-          </div>
-        </div>
-
-        <!-- Composition Optimization metrics card -->
-        <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 flex flex-col justify-between space-y-6">
-          <div class="space-y-4">
-            <h3 class="text-lg font-bold text-white flex items-center gap-2">
-              <span class="w-2.5 h-2.5 bg-amber-500 rounded-full"></span>
-              Library Composition Analysis
-            </h3>
-            
-            <div class="grid grid-cols-2 gap-4">
-              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Hardcover Ratio</span>
-                <p id="calcHardcoverRatio" class="text-2xl font-black text-white mt-1">0%</p>
-                <p id="calcHardcoverLabel" class="text-xs text-slate-400 mt-1">0 of 0 volumes</p>
-              </div>
-
-              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Anthology Ratio</span>
-                <p id="calcAnthologyRatio" class="text-2xl font-black text-white mt-1">0%</p>
-                <p id="calcAnthologyLabel" class="text-xs text-slate-400 mt-1">0 collection volumes</p>
-              </div>
-
-              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Collectibility Status</span>
-                <p id="calcRarityRatio" class="text-2xl font-black text-amber-400 mt-1">0%</p>
-                <p id="calcRarityLabel" class="text-xs text-slate-400 mt-1">0 rare items archived</p>
-              </div>
-
-              <div class="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Average Author Volume</span>
-                <p id="calcAuthorRatio" class="text-2xl font-black text-white mt-1">0</p>
-                <p class="text-xs text-slate-400 mt-1">Ratio per author profile</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Dynamic recommendation system based on state metrics -->
-          <div class="p-4 bg-amber-500/5 rounded-xl border border-amber-500/20 flex gap-3">
-            <svg class="w-6 h-6 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-            <div>
-              <h5 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Storage Optimizer Advice</h5>
-              <p id="calcAdviceBlock" class="text-xs text-slate-300 mt-0.5 leading-relaxed">
-                Loading automated library profile statistics recommendations...
-              </p>
-            </div>
-          </div>
-        </div>
-
       </div>
 
     </div>
@@ -684,7 +640,6 @@
   <!-- VANILLA JAVASCRIPT ARCHITECTURE -->
   <!-- ============================================= -->
   <script>
-    // State Collections
     const CATEGORIES = [
       "Sci-Fi", "Fantasy", "Mystery", "Thriller", "Horror", 
       "Biography", "History", "Classic", "Poetry", "Self-Help", "Non-Fiction"
@@ -776,7 +731,6 @@ function doPost(e) {
 
       // Primary UI Render
       updateAnalyticsDashboard();
-      renderBooks();
     });
 
     // Helper functions
@@ -818,9 +772,8 @@ function doPost(e) {
       });
     }
 
-    // Toggle active tabs visually
     function switchTab(tabId) {
-      const tabs = ['dashboard', 'add', 'sheets', 'analytics'];
+      const tabs = ['dashboard', 'add', 'sheets'];
       tabs.forEach(t => {
         const pane = document.getElementById(`tab-${t}`);
         const btn = document.getElementById(`tabBtn-${t}`);
@@ -836,8 +789,6 @@ function doPost(e) {
 
       // Special Tab-Switch actions
       if (tabId === 'dashboard') {
-        renderBooks();
-      } else if (tabId === 'analytics') {
         updateAnalyticsDashboard();
       } else if (tabId === 'sheets') {
         renderSyncLogsTable();
@@ -937,7 +888,6 @@ function doPost(e) {
       }
     }
 
-    // Native Web Speech Recognition Module for all text entries
     function startVoiceCapture(inputId, listeningSpanId) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -1029,7 +979,6 @@ function doPost(e) {
       renderThemeSelectors();
     }
 
-    // Save and register book submission handler
     async function handleFormSubmit(e) {
       e.preventDefault();
       
@@ -1105,169 +1054,13 @@ function doPost(e) {
       renderBooks();
     }
 
-    function renderBooks() {
-      const grid = document.getElementById('booksGrid');
-      const placeholder = document.getElementById('emptyStatePlaceholder');
-      grid.innerHTML = '';
-
-      const searchQuery = document.getElementById('searchQuery').value.toLowerCase().trim();
-      const filterCategory = document.getElementById('filterCategory').value;
-      const filterType = document.getElementById('filterType').value;
-      const filterRarity = document.getElementById('filterRarity').value;
-      const filterAnthology = document.getElementById('filterAnthology').value;
-      const sortBy = document.getElementById('sortBy').value;
-
-      // Filtering array logic
-      let processed = books.filter(b => {
-        const matchesSearch = b.title.toLowerCase().includes(searchQuery) || 
-                              `${b.authorFirst} ${b.authorLast}`.toLowerCase().includes(searchQuery);
-        const matchesCategory = filterCategory === 'All' || b.category === filterCategory;
-        const matchesType = filterType === 'All' || b.type === filterType;
-        const matchesRarity = filterRarity === 'All' || b.rarity === filterRarity;
-        const matchesAnthology = filterAnthology === 'All' || b.anthology === filterAnthology;
-
-        return matchesSearch && matchesCategory && matchesType && matchesRarity && matchesAnthology;
-      });
-
-      // Sorting
-      processed.sort((a, b) => {
-        if (sortBy === 'newest') return b.id.localeCompare(a.id);
-        if (sortBy === 'oldest') return a.id.localeCompare(b.id);
-        if (sortBy === 'title-asc') return a.title.localeCompare(b.title);
-        if (sortBy === 'title-desc') return b.title.localeCompare(a.title);
-        return 0;
-      });
-
-      // Stats Refresh
-      updateStatsCounters(processed);
-
-      if (processed.length === 0) {
-        placeholder.classList.remove('hidden');
-        grid.classList.add('hidden');
-        return;
-      }
-
-      placeholder.classList.add('hidden');
-      grid.classList.remove('hidden');
-
-      // Inject dynamically compiled typographic cards
-      processed.forEach(b => {
-        const theme = THEME_COLORS.find(c => c.name === b.themeColor) || THEME_COLORS[0];
-        
-        const card = document.createElement('div');
-        card.onclick = () => openBookModal(b);
-        card.className = "group bg-slate-900/40 rounded-2xl border border-slate-800/80 overflow-hidden cursor-pointer hover:-translate-y-1.5 hover:border-amber-500/30 transition-all duration-300 flex flex-col justify-between shadow-lg";
-        
-        card.innerHTML = `
-          <!-- Typographic Book Spine Cover Design -->
-          <div class="relative aspect-[3/4.2] bg-gradient-to-b ${theme.bg} p-6 flex flex-col justify-between border-b border-slate-800 overflow-hidden">
-            <div class="absolute inset-0 bg-noise opacity-5 mix-blend-overlay pointer-events-none"></div>
-            <!-- Left Book Spine Gutter shadow and embossing -->
-            <div class="absolute top-0 bottom-0 left-0 w-1.5 bg-black/40 z-10"></div>
-            <div class="absolute top-0 bottom-0 left-1.5 w-[1px] bg-white/10 z-10"></div>
-            <!-- Outer Gold / Accent Frame -->
-            <div class="absolute inset-3 border ${theme.border} rounded-lg pointer-events-none opacity-40"></div>
-
-            <!-- Top Row Category and Tags -->
-            <div class="relative z-10 flex justify-between items-start">
-              <span class="text-[10px] font-extrabold tracking-widest uppercase text-slate-400/90">${b.category}</span>
-              <div class="flex flex-col gap-1 items-end">
-                ${b.rarity === 'rare' ? '<span class="bg-amber-500 text-slate-950 font-black text-[9px] tracking-wider uppercase px-2 py-0.5 rounded shadow">RARE</span>' : ''}
-                ${b.anthology === 'yes' ? '<span class="bg-sky-600 text-white font-black text-[9px] tracking-wider uppercase px-2 py-0.5 rounded shadow">ANTH</span>' : ''}
-              </div>
-            </div>
-
-            <!-- Core Typographic Book Titles -->
-            <div class="relative z-10 space-y-2 text-center py-6 px-1">
-              <div class="w-8 h-px bg-amber-500/40 mx-auto"></div>
-              <h4 class="text-xl font-bold text-white tracking-tight leading-tight line-clamp-3 font-serif">${b.title}</h4>
-              <p class="text-xs text-amber-500/90 font-medium tracking-wide">${b.authorFirst} ${b.authorLast}</p>
-              <div class="w-8 h-px bg-amber-500/40 mx-auto"></div>
-            </div>
-
-            <!-- Spine Book Volume Marking -->
-            <div class="relative z-10 flex items-center justify-between text-[10px] text-slate-500 font-mono tracking-widest">
-              <span class="capitalize">${b.type}</span>
-              <span>VOL.${b.id}</span>
-            </div>
-          </div>
-
-          <!-- Card Base Metadata -->
-          <div class="p-4 bg-slate-950/40 space-y-3">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-slate-400 font-medium flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full ${b.type === 'hardcover' ? 'bg-indigo-400' : 'bg-emerald-400'}"></span>
-                ${b.type === 'hardcover' ? 'Hard Cover' : 'Paperback'}
-              </span>
-              <span class="text-slate-500">Added ${b.dateAdded}</span>
-            </div>
-
-            <div class="pt-2 border-t border-slate-800/80 flex justify-between items-center">
-              <span class="text-xs font-semibold text-amber-400 group-hover:text-amber-300 transition-all">View Details</span>
-              <button 
-                onclick="event.stopPropagation(); deleteBookItem('${b.id}', '${b.title}')"
-                class="text-slate-500 hover:text-rose-400 p-1.5 hover:bg-rose-500/10 rounded-lg transition-all"
-                title="Delete Volume Record"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-              </button>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function updateStatsCounters(filteredList) {
-      // General stats are based on total active catalog books
-      document.getElementById('statTotalBooks').textContent = books.length;
-      document.getElementById('statRareBooks').textContent = books.filter(b => b.rarity === 'rare').length;
-      document.getElementById('statHardcover').textContent = books.filter(b => b.type === 'hardcover').length;
-      document.getElementById('statAnthology').textContent = books.filter(b => b.anthology === 'yes').length;
-    }
-
-    // Modal Manager
-    function openBookModal(book) {
-      const modal = document.getElementById('selectedBookModal');
-      const theme = THEME_COLORS.find(c => c.name === book.themeColor) || THEME_COLORS[0];
-
-      document.getElementById('modalSpineHeader').className = `p-8 bg-gradient-to-b ${theme.bg} border-b border-slate-800 text-center space-y-3 relative`;
-      document.getElementById('modalCategory').textContent = book.category;
-      document.getElementById('modalTitle').textContent = book.title;
-      document.getElementById('modalAuthor').textContent = `By ${book.authorFirst} ${book.authorLast}`;
-      document.getElementById('modalBinding').textContent = book.type;
-      document.getElementById('modalAnthology').textContent = book.anthology === 'yes' ? 'Yes' : 'No';
-      document.getElementById('modalDate').textContent = book.dateAdded;
-      document.getElementById('modalId').textContent = book.id;
-
-      // Rare marker setting
-      const rarityContainer = document.getElementById('modalRarityBadge');
-      if (book.rarity === 'rare') {
-        rarityContainer.innerHTML = '<span class="text-amber-400 bg-amber-500/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md text-xs">★ Rare Edition</span>';
-      } else {
-        rarityContainer.textContent = 'Standard Edition';
-      }
-
-      // Delete listener bind
-      document.getElementById('modalBtnDelete').onclick = () => deleteBookItem(book.id, book.title);
-
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function closeBookModal() {
-      const modal = document.getElementById('selectedBookModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    // Google Sheets Simulated Log Renderer
+    // Simulated Google Sheets Log Renderer
     function renderSyncLogsTable() {
       const container = document.getElementById('simulatedSyncLogTable');
       container.innerHTML = '';
 
       if (books.length === 0) {
-        container.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-slate-500 font-medium">No archived books in database logs.</td></tr>';
+        container.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-slate-500 font-medium">No archived books in database logs.</td></tr>';
         return;
       }
 
@@ -1289,29 +1082,67 @@ function doPost(e) {
             <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded text-[10px] font-medium">${b.category}</span>
           </td>
           <td class="py-3 px-4 text-slate-500">${b.dateAdded}</td>
+          <td class="py-3 px-4 text-center">
+            <button 
+              onclick="event.stopPropagation(); deleteBookItem('${b.id}', '${b.title}'); renderSyncLogsTable();"
+              class="text-slate-500 hover:text-rose-400 p-1.5 hover:bg-rose-500/10 rounded-lg transition-all"
+              title="Delete Volume Record"
+            >
+              <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+            </button>
+          </td>
         `;
         container.appendChild(row);
       });
     }
 
+    function renderBooks() {
+      // Re-routed to update homepage analytics
+      updateAnalyticsDashboard();
+    }
+
     // Analytics Calculation Engine
     function updateAnalyticsDashboard() {
+      const searchQuery = document.getElementById('searchQuery').value.toLowerCase().trim();
+      const filterCategory = document.getElementById('filterCategory').value;
+      const filterType = document.getElementById('filterType').value;
+      const filterRarity = document.getElementById('filterRarity').value;
+      const filterAnthology = document.getElementById('filterAnthology').value;
+
+      // Filtering array logic based on live UI parameters
+      let processed = books.filter(b => {
+        const matchesSearch = b.title.toLowerCase().includes(searchQuery) || 
+                              `${b.authorFirst} ${b.authorLast}`.toLowerCase().includes(searchQuery);
+        const matchesCategory = filterCategory === 'All' || b.category === filterCategory;
+        const matchesType = filterType === 'All' || b.type === filterType;
+        const matchesRarity = filterRarity === 'All' || b.rarity === filterRarity;
+        const matchesAnthology = filterAnthology === 'All' || b.anthology === filterAnthology;
+
+        return matchesSearch && matchesCategory && matchesType && matchesRarity && matchesAnthology;
+      });
+
+      // Update counters dynamically to match search scope
+      document.getElementById('statTotalBooks').textContent = processed.length;
+      document.getElementById('statRareBooks').textContent = processed.filter(b => b.rarity === 'rare').length;
+      document.getElementById('statHardcover').textContent = processed.filter(b => b.type === 'hardcover').length;
+      document.getElementById('statAnthology').textContent = processed.filter(b => b.anthology === 'yes').length;
+
       const listContainer = document.getElementById('analyticsCategoryList');
       listContainer.innerHTML = '';
 
       const stats = {
-        total: books.length,
-        rare: books.filter(b => b.rarity === 'rare').length,
-        hardcover: books.filter(b => b.type === 'hardcover').length,
-        anthology: books.filter(b => b.anthology === 'yes').length,
-        authors: new Set(books.map(b => `${b.authorFirst} ${b.authorLast}`.trim())).size,
-        byCategory: books.reduce((acc, curr) => {
+        total: processed.length,
+        rare: processed.filter(b => b.rarity === 'rare').length,
+        hardcover: processed.filter(b => b.type === 'hardcover').length,
+        anthology: processed.filter(b => b.anthology === 'yes').length,
+        authors: new Set(processed.map(b => `${b.authorFirst} ${b.authorLast}`.trim())).size,
+        byCategory: processed.reduce((acc, curr) => {
           acc[curr.category] = (acc[curr.category] || 0) + 1;
           return acc;
         }, {})
       };
 
-      // Populate Genre list
+      // Populate Genre list dynamically
       CATEGORIES.forEach(cat => {
         const count = stats.byCategory[cat] || 0;
         const percentage = stats.total > 0 ? (count / stats.total) * 100 : 0;
@@ -1330,7 +1161,7 @@ function doPost(e) {
         listContainer.appendChild(row);
       });
 
-      // Write Metric card labels
+      // Write Metric card ratios
       const hcPct = stats.total > 0 ? Math.round((stats.hardcover / stats.total) * 100) : 0;
       document.getElementById('calcHardcoverRatio').textContent = `${hcPct}%`;
       document.getElementById('calcHardcoverLabel').textContent = `${stats.hardcover} of ${stats.total} volumes`;
@@ -1346,7 +1177,7 @@ function doPost(e) {
       const avgAuthorRatio = stats.authors > 0 ? (stats.total / stats.authors).toFixed(1) : 0;
       document.getElementById('calcAuthorRatio').textContent = avgAuthorRatio;
 
-      // Build AI Advice response
+      // Build AI Advice response dynamically
       const adviceBlock = document.getElementById('calcAdviceBlock');
       if (stats.rare > 3) {
         adviceBlock.textContent = "High Rare Volume ratio detected. Keep valuable historical pieces shelved in dust-jacket sleeves away from direct sunlight to preserve binding pigment.";
@@ -1355,6 +1186,39 @@ function doPost(e) {
       } else {
         adviceBlock.textContent = "Continue compiling your physical book logs. Once you configure a Cloud Webhook URL under the Sheets tab, this dashboard will safely preserve and back up all parameters.";
       }
+    }
+
+    // Modal Manager
+    function openBookModal(book) {
+      const modal = document.getElementById('selectedBookModal');
+      const theme = THEME_COLORS.find(c => c.name === book.themeColor) || THEME_COLORS[0];
+
+      document.getElementById('modalSpineHeader').className = `p-8 bg-gradient-to-b ${theme.bg} border-b border-slate-800 text-center space-y-3 relative`;
+      document.getElementById('modalCategory').textContent = book.category;
+      document.getElementById('modalTitle').textContent = book.title;
+      document.getElementById('modalAuthor').textContent = `By ${book.authorFirst} ${book.authorLast}`;
+      document.getElementById('modalBinding').textContent = book.type;
+      document.getElementById('modalAnthology').textContent = book.anthology === 'yes' ? 'Yes' : 'No';
+      document.getElementById('modalDate').textContent = book.dateAdded;
+      document.getElementById('modalId').textContent = book.id;
+
+      const rarityContainer = document.getElementById('modalRarityBadge');
+      if (book.rarity === 'rare') {
+        rarityContainer.innerHTML = '<span class="text-amber-400 bg-amber-500/10 border border-amber-400/20 px-2.5 py-0.5 rounded-md text-xs">★ Rare Edition</span>';
+      } else {
+        rarityContainer.textContent = 'Standard Edition';
+      }
+
+      document.getElementById('modalBtnDelete').onclick = () => deleteBookItem(book.id, book.title);
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeBookModal() {
+      const modal = document.getElementById('selectedBookModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
     }
 
     // Global Catalyst Dialog Controls
@@ -1375,7 +1239,7 @@ function doPost(e) {
       
       triggerToast("Catalog databases refreshed back to defaults.");
       toggleResetDialog(false);
-      renderBooks();
+      updateAnalyticsDashboard();
     }
   </script>
 </body>
