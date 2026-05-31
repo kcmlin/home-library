@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +71,7 @@
         </div>
         <div>
           <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-            Home Library <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/25 px-2 py-0.5 rounded-full font-normal">v5.1</span>
+            Home Library <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/25 px-2 py-0.5 rounded-full font-normal">v5.2</span>
           </h1>
         </div>
       </div>
@@ -263,7 +262,7 @@
                 class="absolute right-2 top-2 p-1 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
                 title="Dictate last name"
               >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
               </button>
             </div>
           </div>
@@ -649,7 +648,7 @@
                 class="absolute right-2 top-2 p-1 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
                 title="Dictate last name"
               >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
               </button>
             </div>
           </div>
@@ -742,6 +741,17 @@
   <!-- VANILLA JAVASCRIPT APPLICATION LOGIC -->
   <!-- ============================================= -->
   <script>
+    // Color palettes array for leather spine dynamic accents
+    const THEME_COLORS = [
+      { name: 'slate', bg: 'from-slate-900 to-slate-800', border: 'border-slate-700/60', text: 'text-slate-300' },
+      { name: 'indigo', bg: 'from-indigo-950 to-slate-900', border: 'border-indigo-500/30', text: 'text-indigo-400' },
+      { name: 'emerald', bg: 'from-emerald-950 to-slate-900', border: 'border-emerald-500/30', text: 'text-emerald-400' },
+      { name: 'purple', bg: 'from-purple-950 to-slate-900', border: 'border-purple-500/30', text: 'text-purple-400' },
+      { name: 'rose', bg: 'from-rose-950 to-slate-900', border: 'border-rose-500/30', text: 'text-rose-400' },
+      { name: 'amber', bg: 'from-amber-950 to-slate-900', border: 'border-amber-500/30', text: 'text-amber-400' },
+      { name: 'sky', bg: 'from-sky-950 to-slate-900', border: 'border-sky-500/30', text: 'text-sky-400' }
+    ];
+
     const fallbackBooks = [
       { id: "1001", title: "Dune", authorFirst: "Frank", authorLast: "Herbert", type: "hardcover", collectibility: "rare", anthology: "no", category: "Sci-Fi", themeColor: "indigo", importStatus: "imported", dateAdded: "2026-05-15" },
       { id: "1002", title: "The Hobbit", authorFirst: "J.R.R.", authorLast: "Tolkien", type: "hardcover", collectibility: "rare", anthology: "no", category: "Fantasy", themeColor: "emerald", importStatus: "manual", dateAdded: "2026-05-18" },
@@ -776,6 +786,7 @@
       let hash = window.location.hash || '';
       if (hash.includes('id=')) {
         libraryId = hash.split('id=')[1].split('&')[0];
+        localStorage.setItem('home_library_current_id', libraryId); // Keep active ID synced
       } else {
         libraryId = localStorage.getItem('home_library_current_id');
         if (!libraryId) {
@@ -788,12 +799,42 @@
       const currentUrl = window.location.origin + window.location.pathname + '#id=' + libraryId;
       document.getElementById('shareableLinkInput').value = currentUrl;
 
-      // Initialize with local data first to prevent screen flashing delays
+      // 1. Recover Books from LocalStorage or Fallback
       const savedBooks = localStorage.getItem('library_books_vanillajs_' + libraryId);
       books = savedBooks ? JSON.parse(savedBooks) : fallbackBooks;
+
+      // 2. Legacy Migration Strategy: Ingest previous root library databases seamlessly
+      const legacyBooks = localStorage.getItem('library_books_vanillajs');
+      if (legacyBooks) {
+        try {
+          const parsedLegacy = JSON.parse(legacyBooks);
+          if (parsedLegacy && parsedLegacy.length > 0) {
+            books = parsedLegacy;
+            localStorage.setItem('library_books_vanillajs_' + libraryId, JSON.stringify(books));
+            localStorage.removeItem('library_books_vanillajs');
+          }
+        } catch (e) {
+          console.error("Migration Warning:", e);
+        }
+      }
+
+      // Self-healing migration from legacy 'rarity' variable name to new 'collectibility' key
+      let migrated = false;
+      books.forEach(b => {
+        if (b.rarity !== undefined && b.collectibility === undefined) {
+          b.collectibility = b.rarity;
+          delete b.rarity;
+          migrated = true;
+        }
+      });
+      if (migrated) {
+        localStorage.setItem('library_books_vanillajs_' + libraryId, JSON.stringify(books));
+      }
+
+      // Force-paint initial shelf UI instantly
       renderBooks();
 
-      // Firestore Cloud Connection Setup
+      // 3. Authenticate and Connect to Cloud Storage
       if (typeof __firebase_config !== 'undefined') {
         try {
           const firebaseConfig = JSON.parse(__firebase_config);
@@ -802,43 +843,50 @@
           db = firebase.firestore();
           isCloudEnabled = true;
 
-          // Set status
+          // Set status indicator state
           document.getElementById('cloudStatusBadge').textContent = 'Connecting...';
           document.getElementById('cloudStatusBadge').className = 'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/25 animate-pulse';
 
-          // Authenticated Session Verification
-          await new Promise((resolve) => {
-            auth.onAuthStateChanged(async (user) => {
-              if (user) {
-                currentUser = user;
-                resolve(user);
-              } else {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                  try {
-                    await auth.signInWithCustomToken(__initial_auth_token);
-                  } catch (e) {
-                    await auth.signInAnonymously();
-                  }
-                } else {
-                  await auth.signInAnonymously();
-                }
-              }
-            });
-          });
+          // Authenticated Session Verification (Rule 3 Compliance: Token check priority)
+          let credential;
+          try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+              credential = await auth.signInWithCustomToken(__initial_auth_token);
+            } else {
+              credential = await auth.signInAnonymously();
+            }
+            currentUser = credential.user;
+          } catch (authError) {
+            console.error("Authenticated token session verification error:", authError);
+            // Re-attempt anonymous fallback
+            try {
+              credential = await auth.signInAnonymously();
+              currentUser = credential.user;
+            } catch (anonError) {
+              console.error("Anonymous auth fallback error:", anonError);
+            }
+          }
 
-          // Single-document collection hook (preventing sandbox reload loops)
+          if (!currentUser) {
+            loadOfflineFallbackOnly();
+            return;
+          }
+
+          // Single-document Firestore Stream Hook (Rule 1 & Rule 2 compliant)
           const docRef = db.doc(`artifacts/${appId}/public/data/libraries/${libraryId}`);
           docRef.onSnapshot((docSnap) => {
+            if (!currentUser) return; // Rule 3 Guard
+            
             if (docSnap.exists) {
               const cloudData = docSnap.data();
               if (cloudData && cloudData.books) {
                 books = cloudData.books;
-                // Cache locally
                 localStorage.setItem('library_books_vanillajs_' + libraryId, JSON.stringify(books));
                 renderBooks();
               }
             } else {
-              docRef.set({ books: books });
+              // Populate empty remote documents with legacy-migrated local arrays
+              docRef.set({ books: books }).catch(err => console.error("Cloud seed rejected:", err));
             }
             
             // Mark cloud active
@@ -850,14 +898,14 @@
           });
 
         } catch (err) {
-          console.error("Firebase init failed, continuing in Offline mode.", err);
+          console.error("Firebase initialization failed, running offline.", err);
           loadOfflineFallbackOnly();
         }
       } else {
         loadOfflineFallbackOnly();
       }
 
-      // Form layout defaults
+      // Add-Form initial styling properties
       setFormBinding('paperback');
       setFormCollectibility('not-rare');
       setFormAnthology('no');
@@ -870,10 +918,12 @@
     }
 
     async function syncBooksState() {
-      // Local caching
+      // Local persistence cache
       localStorage.setItem('library_books_vanillajs_' + libraryId, JSON.stringify(books));
       
-      if (isCloudEnabled && currentUser && db) {
+      if (!currentUser) return; // Rule 3 Guard
+      
+      if (isCloudEnabled && db) {
         try {
           const docRef = db.doc(`artifacts/${appId}/public/data/libraries/${libraryId}`);
           await docRef.set({ books: books }, { merge: true });
@@ -960,7 +1010,7 @@
         btnStandard.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
         btnRare.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
       } else {
-        btnRare.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnRare.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
         btnStandard.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
       }
     }
@@ -1022,6 +1072,7 @@
       }
     }
 
+    // Anthology Setter
     function setEditFormAnthology(val) {
       editSelectedAnthology = val;
       const btnNo = document.getElementById('btnEditAnthologyNo');
