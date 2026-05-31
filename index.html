@@ -353,12 +353,20 @@
     <!-- LOGGED BOOKS TABLE (HOMEPAGE BOTTOM) -->
     <!-- ============================================= -->
     <div class="bg-slate-900/40 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
-      <div class="px-6 py-4 border-b border-slate-800 flex justify-between items-center">
+      <div class="px-6 py-4 border-b border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h3 class="text-base font-bold text-white flex items-center gap-2">
-          <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+          <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
           Logged Books Archive
         </h3>
-        <span id="filteredCountBadge" class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full font-semibold border border-slate-700">0 volumes matched</span>
+        <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          <span id="filteredCountBadge" class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1.5 rounded-full font-semibold border border-slate-700">0 volumes matched</span>
+          <button onclick="exportBooksToCSV()" class="text-xs text-slate-950 bg-amber-500 hover:bg-amber-400 font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-lg">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 015.25 21h13.5A2.25 2.25 0 0121 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            <span>Export CSV</span>
+          </button>
+        </div>
       </div>
 
       <div class="overflow-x-auto custom-scrollbar">
@@ -498,7 +506,6 @@
     let formSelectedBinding = 'paperback';
     let formSelectedRarity = 'not-rare';
     let formSelectedAnthology = 'no';
-    let formSelectedTheme = 'indigo';
 
     window.addEventListener('DOMContentLoaded', () => {
       // Sync LocalStorage
@@ -512,7 +519,6 @@
       setFormBinding('paperback');
       setFormRarity('not-rare');
       setFormAnthology('no');
-      renderThemeSelectors();
 
       // Render Dashboard elements
       renderBooks();
@@ -527,26 +533,6 @@
         optFilter.value = cat;
         optFilter.textContent = cat;
         filterCategory.appendChild(optFilter);
-      });
-    }
-
-    // Render color theme selector choices
-    function renderThemeSelectors() {
-      const container = document.getElementById('themeSelectionContainer');
-      container.innerHTML = '';
-      
-      THEME_COLORS.forEach(col => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.id = `btnTheme-${col.name}`;
-        btn.onclick = () => setFormThemeColor(col.name);
-        btn.className = `px-3 py-2 rounded-xl text-xs font-bold border capitalize transition-all flex items-center gap-2 ${
-          formSelectedTheme === col.name 
-            ? 'bg-slate-900 border-amber-500 text-amber-400 shadow-md' 
-            : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white'
-        }`;
-        btn.innerHTML = `<span class="w-3 h-3 rounded-full bg-gradient-to-tr ${col.bg}"></span> ${col.name}`;
-        container.appendChild(btn);
       });
     }
 
@@ -606,6 +592,65 @@
       }
     }
 
+    // Export current filtered dataset as CSV
+    function exportBooksToCSV() {
+      const searchQuery = document.getElementById('searchQuery').value.toLowerCase().trim();
+      const filterCategory = document.getElementById('filterCategory').value;
+      const filterType = document.getElementById('filterType').value;
+      const filterRarity = document.getElementById('filterRarity').value;
+      const filterAnthology = document.getElementById('filterAnthology').value;
+
+      // Re-evaluate current active filter items
+      const processed = books.filter(b => {
+        const matchesSearch = b.title.toLowerCase().includes(searchQuery) || 
+                              `${b.authorFirst} ${b.authorLast}`.toLowerCase().includes(searchQuery);
+        const matchesCategory = filterCategory === 'All' || b.category === filterCategory;
+        const matchesType = filterType === 'All' || b.type === filterType;
+        const matchesRarity = filterRarity === 'All' || b.rarity === filterRarity;
+        const matchesAnthology = filterAnthology === 'All' || b.anthology === filterAnthology;
+
+        return matchesSearch && matchesCategory && matchesType && matchesRarity && matchesAnthology;
+      });
+
+      if (processed.length === 0) {
+        triggerToast("No books found matching criteria to export.", "warning");
+        return;
+      }
+
+      // Generate clean standard csv matrix string
+      const headers = ["ID", "Book Title", "Author First Name", "Author Last Name", "Category", "Binding Type", "Rarity Level", "Anthology", "Date Logged"];
+      const csvRows = [headers.join(",")];
+
+      processed.forEach(b => {
+        const row = [
+          `"${b.id}"`,
+          `"${b.title.replace(/"/g, '""')}"`,
+          `"${b.authorFirst.replace(/"/g, '""')}"`,
+          `"${(b.authorLast || '').replace(/"/g, '""')}"`,
+          `"${b.category}"`,
+          `"${b.type}"`,
+          `"${b.rarity}"`,
+          `"${b.anthology === 'yes' ? 'Yes' : 'No'}"`,
+          `"${b.dateAdded}"`
+        ];
+        csvRows.push(row.join(","));
+      });
+
+      const csvString = csvRows.join("\n");
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      
+      const fileTimestamp = new Date().toISOString().split('T')[0];
+      link.setAttribute("href", url);
+      link.setAttribute("download", `home_library_export_${fileTimestamp}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      triggerToast(`Successfully exported ${processed.length} volumes to CSV!`, "success");
+    }
+
     function setFormRarity(val) {
       formSelectedRarity = val;
       const btnStandard = document.getElementById('btnRarityStandard');
@@ -634,11 +679,6 @@
       }
     }
 
-    function setFormThemeColor(val) {
-      formSelectedTheme = val;
-      renderThemeSelectors();
-    }
-
     // Save volume
     function handleFormSubmit(e) {
       e.preventDefault();
@@ -663,6 +703,7 @@
         authorLast,
         type: formSelectedBinding,
         rarity: formSelectedRarity,
+        text: 'N/A',
         anthology: formSelectedAnthology,
         category: defaultCategory,
         themeColor: randomThemeColor,
