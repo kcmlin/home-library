@@ -112,7 +112,7 @@
     <!-- ============================================= -->
     <!-- CATALOG NEW VOLUME CARD (HOMEPAGE TOP) -->
     <!-- ============================================= -->
-    <div class="max-w-4xl mx-auto bg-slate-900/30 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6">
+    <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6">
       <div>
         <h2 class="text-2xl font-extrabold text-white flex items-center gap-2.5 font-serif">
           <span class="text-amber-500">⚜</span> Catalog New Book Volume
@@ -124,41 +124,40 @@
 
       <form id="addBookForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
         
-        <!-- Book Title Input with Voice Support -->
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
-              Book Title <span class="text-rose-500">*</span>
-            </label>
-            <span id="listening-title" class="hidden text-xs text-rose-400 animate-pulse flex items-center gap-1 font-semibold">
-              <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span> Listening...
-            </span>
-          </div>
-          <div class="relative">
-            <input
-              type="text"
-              id="formTitle"
-              required
-              placeholder="e.g. Beyond Good and Evil"
-              class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-3 pl-4 pr-12 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-medium"
-            />
-            <button
-              type="button"
-              onclick="startVoiceCapture('formTitle', 'listening-title')"
-              class="absolute right-2.5 top-2.5 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
-              title="Dictate book title"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Author Name Inputs (First/Last) with Voice Support -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          
-          <!-- First Name -->
+        <!-- Row 1: Book Title and Author First/Last Name with Voice Support -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Book Title -->
           <div>
-            <div class="flex justify-between items-center mb-2">
+            <div class="flex justify-between items-center mb-1.5">
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                Book Title <span class="text-rose-500">*</span>
+              </label>
+              <span id="listening-title" class="hidden text-xs text-rose-400 animate-pulse flex items-center gap-1 font-semibold">
+                <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span> Listening...
+              </span>
+            </div>
+            <div class="relative">
+              <input
+                type="text"
+                id="formTitle"
+                required
+                placeholder="e.g. Beyond Good and Evil"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 pl-4 pr-12 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-medium text-sm"
+              />
+              <button
+                type="button"
+                onclick="startVoiceCapture('formTitle', 'listening-title')"
+                class="absolute right-2 top-2 p-1 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
+                title="Dictate book title"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Author First Name -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
               <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
                 Author First Name <span class="text-rose-500">*</span>
               </label>
@@ -172,22 +171,22 @@
                 id="formAuthorFirst"
                 required
                 placeholder="e.g. Friedrich"
-                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-3 pl-4 pr-12 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-medium"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 pl-4 pr-12 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-medium text-sm"
               />
               <button
                 type="button"
                 onclick="startVoiceCapture('formAuthorFirst', 'listening-authorFirst')"
-                class="absolute right-2.5 top-2.5 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
+                class="absolute right-2 top-2 p-1 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
                 title="Dictate first name"
               >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
               </button>
             </div>
           </div>
 
-          <!-- Last Name -->
+          <!-- Author Last Name -->
           <div>
-            <div class="flex justify-between items-center mb-2">
+            <div class="flex justify-between items-center mb-1.5">
               <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
                 Author Last Name
               </label>
@@ -200,82 +199,68 @@
                 type="text"
                 id="formAuthorLast"
                 placeholder="e.g. Nietzsche"
-                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-3 pl-4 pr-12 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-medium"
+                class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-2.5 pl-4 pr-12 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 placeholder-slate-600 transition-all font-medium text-sm"
               />
               <button
                 type="button"
                 onclick="startVoiceCapture('formAuthorLast', 'listening-authorLast')"
-                class="absolute right-2.5 top-2.5 p-1.5 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
+                class="absolute right-2 top-2 p-1 rounded-lg bg-slate-800 text-amber-500 hover:bg-slate-700 hover:text-amber-400 transition-all"
                 title="Dictate last name"
               >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
               </button>
             </div>
           </div>
-
         </div>
 
-        <!-- Category & Binding Selection -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Category</label>
-            <select id="formCategory" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl py-3 px-4 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-slate-100 transition-all cursor-pointer font-medium">
-              <!-- Rendered dynamically -->
-            </select>
-          </div>
+        <!-- Row 2: Binding, Collectibility, and Anthology toggles -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Binding Type -->
           <div>
             <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Binding Type</label>
             <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="setFormBinding('paperback')" id="btnBindPaperback" class="py-3 px-4 rounded-xl font-bold text-sm border bg-amber-500/10 border-amber-500 text-amber-400 transition-all">
+              <button type="button" onclick="setFormBinding('paperback')" id="btnBindPaperback" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all">
                 Paperback
               </button>
-              <button type="button" onclick="setFormBinding('hardcover')" id="btnBindHardcover" class="py-3 px-4 rounded-xl font-bold text-sm border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+              <button type="button" onclick="setFormBinding('hardcover')" id="btnBindHardcover" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
                 Hard Cover
               </button>
             </div>
           </div>
-        </div>
 
-        <!-- Rarity & Anthology status toggle -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Collectibility -->
           <div>
             <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Collectibility Status</label>
             <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="setFormRarity('not-rare')" id="btnRarityStandard" class="py-3 px-4 rounded-xl font-bold text-sm border bg-amber-500/10 border-amber-500 text-amber-400 transition-all">
+              <button type="button" onclick="setFormRarity('not-rare')" id="btnRarityStandard" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all">
                 Standard Edition
               </button>
-              <button type="button" onclick="setFormRarity('rare')" id="btnRarityRare" class="py-3 px-4 rounded-xl font-bold text-sm border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+              <button type="button" onclick="setFormRarity('rare')" id="btnRarityRare" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
                 Rare Archive
               </button>
             </div>
           </div>
+
+          <!-- Anthology -->
           <div>
             <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Anthology? (Collection of works)</label>
             <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="setFormAnthology('no')" id="btnAnthologyNo" class="py-3 px-4 rounded-xl font-bold text-sm border bg-sky-500/10 border-sky-500/80 text-sky-400 transition-all">
+              <button type="button" onclick="setFormAnthology('no')" id="btnAnthologyNo" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-sky-500/10 border-sky-500/80 text-sky-400 transition-all">
                 Single Work
               </button>
-              <button type="button" onclick="setFormAnthology('yes')" id="btnAnthologyYes" class="py-3 px-4 rounded-xl font-bold text-sm border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
+              <button type="button" onclick="setFormAnthology('yes')" id="btnAnthologyYes" class="py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all">
                 Anthology
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Spine Color Visual Accent Selection -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-            Spine Accent Color Theme (Visual Presentation)
-          </label>
-          <div id="themeSelectionContainer" class="flex flex-wrap gap-2.5"></div>
-        </div>
-
         <!-- Form Submission Row -->
-        <div class="pt-6 border-t border-slate-800/80 flex items-center justify-between">
+        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
           <span class="text-xs text-slate-500">
             * Marked fields are required for catalog registry.
           </span>
-          <button type="submit" class="py-3 px-8 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl transition-all text-sm shadow-xl flex items-center gap-2">
+          <button type="submit" class="py-2.5 px-8 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl transition-all text-xs shadow-xl flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
             Save to Library Shelf
           </button>
@@ -536,18 +521,12 @@
     // Populate drop selectors
     function populateCategoryFilters() {
       const filterCategory = document.getElementById('filterCategory');
-      const formCategory = document.getElementById('formCategory');
       
       CATEGORIES.forEach(cat => {
         const optFilter = document.createElement('option');
         optFilter.value = cat;
         optFilter.textContent = cat;
         filterCategory.appendChild(optFilter);
-
-        const optForm = document.createElement('option');
-        optForm.value = cat;
-        optForm.textContent = cat;
-        formCategory.appendChild(optForm);
       });
     }
 
@@ -619,11 +598,11 @@
       const btnHardcover = document.getElementById('btnBindHardcover');
 
       if (val === 'paperback') {
-        btnPaperback.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
-        btnHardcover.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+        btnPaperback.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnHardcover.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
       } else {
-        btnHardcover.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
-        btnPaperback.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+        btnHardcover.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnPaperback.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
       }
     }
 
@@ -633,11 +612,11 @@
       const btnRare = document.getElementById('btnRarityRare');
 
       if (val === 'not-rare') {
-        btnStandard.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
-        btnRare.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+        btnStandard.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnRare.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
       } else {
-        btnRare.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
-        btnStandard.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+        btnRare.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-amber-500/10 border-amber-500 text-amber-400 transition-all";
+        btnStandard.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
       }
     }
 
@@ -647,11 +626,11 @@
       const btnYes = document.getElementById('btnAnthologyYes');
 
       if (val === 'no') {
-        btnNo.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-sky-500/10 border-sky-500/80 text-sky-400 transition-all";
-        btnYes.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+        btnNo.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-sky-500/10 border-sky-500/80 text-sky-400 transition-all";
+        btnYes.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
       } else {
-        btnYes.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-sky-500/10 border-sky-500/80 text-sky-400 transition-all";
-        btnNo.className = "py-3 px-4 rounded-xl font-bold text-sm border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
+        btnYes.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-sky-500/10 border-sky-500/80 text-sky-400 transition-all";
+        btnNo.className = "py-2.5 px-4 rounded-xl font-bold text-xs border bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white transition-all";
       }
     }
 
@@ -667,12 +646,15 @@
       const title = document.getElementById('formTitle').value.trim();
       const authorFirst = document.getElementById('formAuthorFirst').value.trim();
       const authorLast = document.getElementById('formAuthorLast').value.trim();
-      const category = document.getElementById('formCategory').value;
 
       if (!title || !authorFirst) {
         triggerToast("Please provide both a book title and author's first name.", "warning");
         return;
       }
+
+      // Default the category to "Classic" and randomly assign a theme color
+      const defaultCategory = "Classic";
+      const randomThemeColor = THEME_COLORS[Math.floor(Math.random() * THEME_COLORS.length)].name;
 
       const bookPayload = {
         id: Date.now().toString().slice(-6),
@@ -682,8 +664,8 @@
         type: formSelectedBinding,
         rarity: formSelectedRarity,
         anthology: formSelectedAnthology,
-        category,
-        themeColor: formSelectedTheme,
+        category: defaultCategory,
+        themeColor: randomThemeColor,
         dateAdded: new Date().toISOString().split('T')[0]
       };
 
@@ -697,7 +679,6 @@
       setFormBinding('paperback');
       setFormRarity('not-rare');
       setFormAnthology('no');
-      setFormThemeColor('indigo');
 
       // Refresh Books Table
       renderBooks();
@@ -836,6 +817,14 @@
 
       container.appendChild(toast);
       setTimeout(() => dismissToast(id), 3500);
+    }
+
+    function dismissToast(id) {
+      const toast = document.getElementById(`toast-${id}`);
+      if (toast) {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }
     }
 
     // Modal Controller
